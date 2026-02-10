@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup – GramMitra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <style>
+    :root{
+      --bg:#020617;--text:#e5e7eb;--muted:#94a3b8;
+      --border:rgba(148,163,184,0.6);--accent:#22c55e;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      min-height:100vh;
+      background:radial-gradient(circle at top,#111827,#020617 55%,#000);
+      color:var(--text);
+      font-family:"Inter",system-ui,sans-serif;
+      display:flex;align-items:center;justify-content:center;
+      padding:32px 16px;
+    }
+    .shell{
+      width:100%;max-width:960px;
+      border-radius:28px;border:1px solid var(--border);
+      background:rgba(15,23,42,0.98);
+      box-shadow:0 28px 70px rgba(15,23,42,0.9);
+      display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+      overflow:hidden;
+    }
+    .left{padding:32px 40px;border-right:1px solid rgba(148,163,184,0.4);}
+    .right{padding:32px 30px;background:radial-gradient(circle at top,rgba(52,211,153,0.4),rgba(15,23,42,1));}
+    .brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+    .brand{display:flex;align-items:center;gap:10px;}
+    .brand-circle{width:40px;height:40px;border-radius:999px;padding:2px;background:conic-gradient(from 180deg,#22c55e,#4f46e5,#22c55e);}
+    .brand-inner{width:100%;height:100%;border-radius:inherit;background:#020617;display:flex;align-items:center;justify-content:center;color:#e5e7eb;font-weight:700;}
+    .lang-box{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(15,23,42,0.96);font-size:.78rem;}
+    .lang-box select{border:none;outline:none;background:transparent;color:var(--text);}
+    h1{font-size:1.6rem;margin:10px 0 6px;}
+    .desc{font-size:.9rem;color:var(--muted);margin-bottom:22px;}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .field{margin-bottom:14px;}
+    label{font-size:.78rem;color:var(--muted);display:block;margin-bottom:5px;}
+    .input-wrap{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:#020617;}
+    .input-wrap input,.input-wrap select{flex:1;border:none;outline:none;background:transparent;color:var(--text);font-size:.85rem;}
+    .small-text{font-size:.78rem;color:var(--muted);margin-top:2px;}
+    .btn-primary{width:100%;border-radius:10px;border:none;padding:9px 12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#ecfdf3;font-weight:600;font-size:.9rem;cursor:pointer;margin-top:4px;margin-bottom:10px;}
+    .link-row{text-align:center;font-size:.8rem;color:var(--muted);}
+    .link-row a{color:#38bdf8;text-decoration:none;}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--border);font-size:.78rem;color:var(--muted);}
+    .list{margin-top:16px;font-size:.78rem;color:var(--muted);display:flex;flex-direction:column;gap:8px;}
+    .list span i{color:#22c55e;margin-right:4px;}
+    @media(max-width:880px){.shell{grid-template-columns:1fr;}.left{border-right:none;border-bottom:1px solid rgba(148,163,184,0.4);}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="left">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-circle"><div class="brand-inner">GM</div></div>
+        <div>
+          <div style="font-size:.9rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Gram Mitra</div>
+          <div style="font-size:.75rem;color:var(--muted);">Onboarding new entrepreneurs</div>
+        </div>
+      </div>
+      <div class="lang-box">
+        <i class="ri-translate-2"></i>
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="bh">भोजपुरी</option>
+          <option value="mr">मराठी</option>
+          <option value="bn">বাংলা</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </div>
+    </div>
+
+    <h1 data-i18n="signupTitle">Create your free account</h1>
+    <p class="desc" data-i18n="signupDesc">
+      Just your basic details to start. You can upgrade documents and verification later.
+    </p>
+
+    <form id="signupForm">
+      <div class="grid2">
+        <div class="field">
+          <label data-i18n="signupNameLabel">Full name</label>
+          <div class="input-wrap">
+            <i class="ri-user-3-line" style="color:#38bdf8;"></i>
+            <input type="text" placeholder="Ravi Kumar">
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="signupPhoneLabel">Mobile number</label>
+          <div class="input-wrap">
+            <i class="ri-smartphone-line" style="color:#38bdf8;"></i>
+            <input type="tel" placeholder="+91 98765 43210">
+          </div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label data-i18n="signupVillageLabel">Village / Area</label>
+          <div class="input-wrap">
+            <i class="ri-map-pin-2-line" style="color:#f97316;"></i>
+            <input type="text" placeholder="Balrampur, UP">
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="signupRoleLabel">You are mainly</label>
+          <div class="input-wrap">
+            <i class="ri-user-heart-line" style="color:#22c55e;"></i>
+            <select>
+              <option data-i18n="signupRoleSeller">Seller / Shop owner</option>
+              <option data-i18n="signupRoleBuyer">Buyer / Customer</option>
+              <option data-i18n="signupRoleAdmin">NGO / Admin</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label data-i18n="signupPinLabel">Set 4 digit PIN</label>
+          <div class="input-wrap">
+            <i class="ri-lock-2-line" style="color:#fbbf24;"></i>
+            <input type="password" maxlength="4" placeholder="••••">
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="signupConfirmLabel">Confirm PIN</label>
+          <div class="input-wrap">
+            <i class="ri-lock-password-line" style="color:#fbbf24;"></i>
+            <input type="password" maxlength="4" placeholder="••••">
+          </div>
+        </div>
+      </div>
+      <p class="small-text" data-i18n="signupNote">
+        For demo, no real SMS is sent. In real app, we will verify your number with OTP and store data securely.
+      </p>
+      <button class="btn-primary" type="submit" data-i18n="signupBtn">Create account & go to dashboard</button>
+    </form>
+
+    <div class="link-row">
+      <span data-i18n="signupHave">Already have an account?</span>
+      <a href="login.html" data-i18n="signupGoLogin">Login</a>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="pill">
+      <i class="ri-lightbulb-flash-line" style="color:#facc15;"></i>
+      <span data-i18n="signupHint">You can later connect SHG, FPO or NGO under one admin.</span>
+    </div>
+    <div class="list">
+      <span><i class="ri-check-fill"></i><span data-i18n="signupPoint1">Start as basic user without any KYC; just village and phone.</span></span>
+      <span><i class="ri-check-fill"></i><span data-i18n="signupPoint2">Later, upload PAN, Aadhaar and shop proof to unlock loans.</span></span>
+      <span><i class="ri-check-fill"></i><span data-i18n="signupPoint3">Explain in viva that verification logic will be implemented on server side.</span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const translations = {
+    en:{
+      signupTitle:"Create your free account",
+      signupDesc:"Just your basic details to start. You can upgrade documents and verification later.",
+      signupNameLabel:"Full name",
+      signupPhoneLabel:"Mobile number",
+      signupVillageLabel:"Village / Area",
+      signupRoleLabel:"You are mainly",
+      signupRoleSeller:"Seller / Shop owner",
+      signupRoleBuyer:"Buyer / Customer",
+      signupRoleAdmin:"NGO / Admin",
+      signupPinLabel:"Set 4 digit PIN",
+      signupConfirmLabel:"Confirm PIN",
+      signupNote:"For demo, no real SMS is sent. In real app, we will verify your number with OTP and store data securely.",
+      signupBtn:"Create account & go to dashboard",
+      signupHave:"Already have an account?",
+      signupGoLogin:"Login",
+      signupHint:"You can later connect SHG, FPO or NGO under one admin.",
+      signupPoint1:"Start as basic user without any KYC; just village and phone.",
+      signupPoint2:"Later, upload PAN, Aadhaar and shop proof to unlock loans.",
+      signupPoint3:"Explain in viva that verification logic will be implemented on server side."
+    },
+    hi:{
+      signupTitle:"अपना फ्री अकाउंट बनाएँ",
+      signupDesc:"शुरू करने के लिए बस कुछ बेसिक जानकारी। डॉक्यूमेंट और वेरिफिकेशन आप बाद में भी जोड़ सकते हैं।",
+      signupNameLabel:"पूरा नाम",
+      signupPhoneLabel:"मोबाइल नंबर",
+      signupVillageLabel:"गाँव / क्षेत्र",
+      signupRoleLabel:"आप मुख्य रूप से",
+      signupRoleSeller:"सेलर / दुकान मालिक",
+      signupRoleBuyer:"बायर / ग्राहक",
+      signupRoleAdmin:"NGO / एडमिन",
+      signupPinLabel:"4 अंकों का PIN सेट करें",
+      signupConfirmLabel:"PIN दोबारा लिखें",
+      signupNote:"डेमो के लिए कोई असली SMS नहीं जाएगा। असली ऐप में OTP से नंबर वेरिफाई होगा और डेटा सुरक्षित रहेगा।",
+      signupBtn:"अकाउंट बनाएँ और डैशबोर्ड पर जाएँ",
+      signupHave:"पहले से अकाउंट है?",
+      signupGoLogin:"लॉगिन करें",
+      signupHint:"बाद में आप SHG, FPO या NGO को एक ही एडमिन के नीचे जोड़ सकते हैं।",
+      signupPoint1:"शुरुआत में बिना KYC, सिर्फ गाँव और मोबाइल से अकाउंट बनेगा।",
+      signupPoint2:"आगे चलकर PAN, आधार और दुकान के कागज़ जोड़कर लोन अनलॉक होगा।",
+      signupPoint3:"विवा में बताएँ कि वेरिफिकेशन लॉजिक सर्वर साइड पर इम्प्लीमेंट करेंगे।"
+    },
+    bh:{
+      signupTitle:"आपन फ्री अकाउंट बनाईं",
+      signupDesc:"शुरू खातिर बस थोड़ बेसिक डिटेल। कागज-पत्तर आ वेरिफिकेशन बाद में जोड़ सकत बानी।",
+      signupNameLabel:"पूरा नाम",
+      signupPhoneLabel:"मोबाइल नंबर",
+      signupVillageLabel:"गाँव / इलाका",
+      signupRoleLabel:"रउआ मुख्य रूप से",
+      signupRoleSeller:"सेलर / दुकान मालिक",
+      signupRoleBuyer:"बायर / ग्राहक",
+      signupRoleAdmin:"NGO / एडमिन",
+      signupPinLabel:"4 डिजिट PIN सेट करीं",
+      signupConfirmLabel:"PIN फेर से लिखीं",
+      signupNote:"डेमो खातिर असली SMS ना जाई। असली ऐप में OTP से नंबर चेक होई आ डेटा सुरक्षित रही।",
+      signupBtn:"अकाउंट बनाईं आ डैशबोर्ड पर जाईं",
+      signupHave:"पहिले से अकाउंट बा?",
+      signupGoLogin:"लॉगिन करीं",
+      signupHint:"आगे चलके SHG, FPO या NGO सबके एके एडमिन के नीचे जोड़ सकत बानी।",
+      signupPoint1:"शुरू में बिना KYC, खाली गाँव आ मोबाइल से अकाउंट बन जाई।",
+      signupPoint2:"बाद में PAN, Aadhaar आ दुकान के कागज जोड़ के लोन ले सकब।",
+      signupPoint3:"विवा में बताईं कि वेरिफिकेशन सर्वर साइड पर करीं।"
+    },
+    mr:{
+      signupTitle:"आपले मोफत खाते तयार करा",
+      signupDesc:"सुरुवातीसाठी फक्त थोडी मूलभूत माहिती. कागदपत्रे आणि पडताळणी नंतर देखील करू शकता.",
+      signupNameLabel:"पूर्ण नाव",
+      signupPhoneLabel:"मोबाइल नंबर",
+      signupVillageLabel:"गाव / परिसर",
+      signupRoleLabel:"आपण मुख्यतः",
+      signupRoleSeller:"सेलर / दुकान मालक",
+      signupRoleBuyer:"बायर / ग्राहक",
+      signupRoleAdmin:"NGO / अॅडमिन",
+      signupPinLabel:"4 अंकी PIN सेट करा",
+      signupConfirmLabel:"PIN पुन्हा लिहा",
+      signupNote:"डेमोसाठी कोणताही खरा SMS जात नाही. प्रत्यक्षात OTP द्वारे नंबर तपासला जाईल आणि डेटा सुरक्षित राहील.",
+      signupBtn:"खाते तयार करा आणि डॅशबोर्डवर जा",
+      signupHave:"आधीच खाते आहे?",
+      signupGoLogin:"लॉगिन करा",
+      signupHint:"नंतर तुम्ही SHG, FPO किंवा NGO ला एकाच अ‍ॅडमिनखाली जोडू शकता.",
+      signupPoint1:"सुरुवातीला KYC शिवाय, फक्त गाव आणि मोबाइलने खाते बनते.",
+      signupPoint2:"नंतर PAN, Aadhaar आणि दुकान पुराव्याने लोन मिळू शकते.",
+      signupPoint3:"विवा मध्ये सांगा की पडताळणी लॉजिक सर्व्हर साईडवर कराल."
+    },
+    bn:{
+      signupTitle:"আপনার ফ্রি অ্যাকাউন্ট তৈরি করুন",
+      signupDesc:"শুরু করার জন্য অল্প কিছু তথ্যই যথেষ্ট। ডকুমেন্ট ও ভেরিফিকেশন পরে যোগ করতে পারবেন।",
+      signupNameLabel:"পুরো নাম",
+      signupPhoneLabel:"মোবাইল নম্বর",
+      signupVillageLabel:"গ্রাম / এলাকা",
+      signupRoleLabel:"আপনি মূলত",
+      signupRoleSeller:"সেলার / দোকান মালিক",
+      signupRoleBuyer:"বায়ার / কাস্টমার",
+      signupRoleAdmin:"NGO / অ্যাডমিন",
+      signupPinLabel:"৪ ডিজিট PIN সেট করুন",
+      signupConfirmLabel:"PIN আবার লিখুন",
+      signupNote:"ডেমোর জন্য কোনো আসল SMS যাবে না। বাস্তবে OTP দিয়ে নম্বর যাচাই ও ডেটা নিরাপদে রাখা হবে।",
+      signupBtn:"অ্যাকাউন্ট তৈরি করুন ও ড্যাশবোর্ডে যান",
+      signupHave:"আগেই অ্যাকাউন্ট আছে?",
+      signupGoLogin:"লগইন করুন",
+      signupHint:"পরে আপনি SHG, FPO বা NGO-কে এক অ্যাডমিনের অধীনে যুক্ত করতে পারেন।",
+      signupPoint1:"শুরুতে KYC ছাড়াই, শুধু গ্রাম ও মোবাইলে অ্যাকাউন্ট তৈরি হবে।",
+      signupPoint2:"পরে PAN, Aadhaar ও দোকানের প্রমাণ দিয়ে লোন পাওয়া যাবে।",
+      signupPoint3:"ভাইভায় বলুন, ভেরিফিকেশন সার্ভার সাইডে ইমপ্লিমেন্ট করবেন।"
+    },
+    ta:{
+      signupTitle:"உங்கள் இலவச கணக்கை உருவாக்குங்கள்",
+      signupDesc:"தொடங்க சில அடிப்படை தகவல்கள் போதுமானது. ஆவணங்கள் மற்றும் சரிபார்ப்பு பின்னர் செய்யலாம்.",
+      signupNameLabel:"முழு பெயர்",
+      signupPhoneLabel:"மொபைல் எண்",
+      signupVillageLabel:"கிராமம் / பகுதி",
+      signupRoleLabel:"நீங்கள் முக்கியமாக",
+      signupRoleSeller:"விற்பனையாளர் / கடை உரிமையாளர்",
+      signupRoleBuyer:"வாங்குபவர் / வாடிக்கையாளர்",
+      signupRoleAdmin:"NGO / நிர்வாகி",
+      signupPinLabel:"4 இலக்க PIN அமைக்கவும்",
+      signupConfirmLabel:"PIN ஐ மீண்டும் تایப் செய்யவும்",
+      signupNote:"டெமோவுக்கு எந்த உண்மையான SMS-யும் அனுப்பப்படாது. உண்மையான பயன்பாட்டில் OTP மூலம் எண் சரிபார்க்கப்படும் மற்றும் தரவு பாதுகாப்பாக சேமிக்கப்படும்.",
+      signupBtn:"அக்கவுண்ட் உருவாக்கி டாஷ்போர்டுக்கு செல்லவும்",
+      signupHave:"ஏற்கனவே அக்கவுண்ட் இருக்கிறதா?",
+      signupGoLogin:"லாகின் செய்யவும்",
+      signupHint:"பின்னர் SHG, FPO அல்லது NGO ஐ ஒரே நிர்வாகியின் கீழ் இணைக்கலாம்.",
+      signupPoint1:"ஆரம்பத்தில் KYC இன்றி, கிராமம் மற்றும் மொபைல் மட்டுமே போதும்.",
+      signupPoint2:"பின்னர் PAN, Aadhaar மற்றும் கடை ஆவணங்களுடன் கடன் பெறலாம்.",
+      signupPoint3:"விவாவில் சரிபார்ப்பு லாஜிக் சர்வர் சைடில் செயல்படுத்தப்படும் என்று கூறலாம்."
+    }
+  };
+
+  const langSelect=document.getElementById("langSelect");
+  const i18nEls=document.querySelectorAll("[data-i18n]");
+
+  function applyLang(lang){
+    const dict=translations[lang]||translations.en;
+    i18nEls.forEach(el=>{
+      const key=el.getAttribute("data-i18n");
+      if(dict[key]) el.innerText=dict[key];
+    });
+  }
+
+  const savedLang=localStorage.getItem("app_lang")||"en";
+  langSelect.value=savedLang;
+  applyLang(savedLang);
+  langSelect.addEventListener("change",e=>{
+    const lang=e.target.value;
+    localStorage.setItem("app_lang",lang);
+    applyLang(lang);
+  });
+
+  document.getElementById("signupForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    window.location.href="dashboard.html";
+  });
+</script>
+</body>
+</html>

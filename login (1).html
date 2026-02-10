@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login – GramMitra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <style>
+    :root{
+      --bg:#020617;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --border:rgba(148,163,184,0.6);
+      --accent:#22c55e;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      min-height:100vh;
+      background:radial-gradient(circle at top,#111827,#020617 55%,#000);
+      color:var(--text);
+      font-family:"Inter",system-ui,sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px 16px;
+    }
+    .shell{
+      width:100%;
+      max-width:960px;
+      border-radius:28px;
+      border:1px solid var(--border);
+      overflow:hidden;
+      background:rgba(15,23,42,0.98);
+      box-shadow:0 28px 70px rgba(15,23,42,0.9);
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+    }
+    .left{
+      padding:32px 40px;
+      border-right:1px solid rgba(148,163,184,0.4);
+    }
+    .right{
+      padding:32px 30px;
+      background:radial-gradient(circle at top,rgba(30,64,175,0.5),rgba(15,23,42,1));
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .brand-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:20px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+    }
+    .brand-circle{
+      width:40px;height:40px;border-radius:999px;
+      padding:2px;
+      background:conic-gradient(from 180deg,#22c55e,#4f46e5,#22c55e);
+    }
+    .brand-inner{
+      width:100%;height:100%;border-radius:inherit;
+      background:#020617;
+      display:flex;align-items:center;justify-content:center;
+      color:#e5e7eb;font-weight:700;
+    }
+    .lang-box{
+      display:flex;align-items:center;gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,0.96);
+      font-size:.78rem;
+    }
+    .lang-box select{
+      border:none;outline:none;background:transparent;color:var(--text);
+      font-size:.78rem;
+    }
+    h1{
+      font-size:1.6rem;
+      margin:10px 0 6px;
+    }
+    .desc{
+      font-size:.9rem;
+      color:var(--muted);
+      margin-bottom:22px;
+    }
+    .role-tabs{
+      display:inline-flex;
+      border-radius:999px;
+      border:1px solid var(--border);
+      padding:2px;
+      margin-bottom:18px;
+    }
+    .role-tab{
+      padding:5px 14px;
+      border-radius:999px;
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font-size:.8rem;
+      cursor:pointer;
+    }
+    .role-tab.active{
+      background:rgba(15,23,42,0.98);
+      color:var(--text);
+      box-shadow:0 10px 20px rgba(15,23,42,0.9);
+    }
+    .field{
+      margin-bottom:14px;
+    }
+    label{
+      font-size:.78rem;
+      color:var(--muted);
+      display:block;
+      margin-bottom:5px;
+    }
+    .input-wrap{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      background:#020617;
+    }
+    .input-wrap input{
+      flex:1;
+      border:none;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-size:.85rem;
+    }
+    .help-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:.78rem;
+      color:var(--muted);
+      margin-bottom:16px;
+      margin-top:2px;
+    }
+    .help-row a{
+      color:#38bdf8;
+      text-decoration:none;
+      font-size:.78rem;
+    }
+    .btn-primary{
+      width:100%;
+      border-radius:10px;
+      border:none;
+      padding:9px 12px;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#ecfdf3;
+      font-weight:600;
+      font-size:.9rem;
+      cursor:pointer;
+      margin-bottom:10px;
+    }
+    .link-row{
+      font-size:.8rem;
+      color:var(--muted);
+      text-align:center;
+    }
+    .link-row a{
+      color:#38bdf8;
+      text-decoration:none;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      font-size:.78rem;
+      color:var(--muted);
+    }
+    .info-list{
+      margin-top:18px;
+      font-size:.78rem;
+      color:var(--muted);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .info-list span i{color:#22c55e;margin-right:4px;}
+    .highlight-card{
+      margin-top:20px;
+      padding:12px 12px 13px;
+      border-radius:14px;
+      border:1px dashed rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.9);
+      font-size:.78rem;
+      color:var(--muted);
+    }
+    .highlight-card strong{color:#e5e7eb;}
+    @media(max-width:880px){
+      .shell{grid-template-columns:1fr;}
+      .left{border-right:none;border-bottom:1px solid rgba(148,163,184,0.4);}
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="left">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-circle"><div class="brand-inner">GM</div></div>
+        <div>
+          <div style="font-size:.9rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;">Gram Mitra</div>
+          <div style="font-size:.75rem;color:var(--muted);">Village commerce platform</div>
+        </div>
+      </div>
+      <div class="lang-box">
+        <i class="ri-translate-2"></i>
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="bh">भोजपुरी</option>
+          <option value="mr">मराठी</option>
+          <option value="bn">বাংলা</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </div>
+    </div>
+
+    <h1 data-i18n="loginTitle">Welcome back</h1>
+    <p class="desc" data-i18n="loginDesc">
+      Login to manage your village shop, respond to orders, and learn new skills.
+    </p>
+
+    <div class="role-tabs">
+      <button class="role-tab active" data-role="seller" data-i18n="loginSeller">Seller</button>
+      <button class="role-tab" data-role="buyer" data-i18n="loginBuyer">Buyer</button>
+      <button class="role-tab" data-role="admin" data-i18n="loginAdmin">Admin</button>
+    </div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label data-i18n="loginPhoneLabel">Mobile number</label>
+        <div class="input-wrap">
+          <i class="ri-smartphone-line" style="color:#38bdf8;"></i>
+          <input type="tel" placeholder="+91 98765 43210">
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="loginPinLabel">4 digit PIN / OTP (demo)</label>
+        <div class="input-wrap">
+          <i class="ri-lock-2-line" style="color:#fbbf24;"></i>
+          <input type="password" maxlength="4" placeholder="••••">
+        </div>
+      </div>
+      <div class="help-row">
+        <span>
+          <input type="checkbox" id="remember" style="width:12px;height:12px;margin-right:4px;">
+          <label for="remember" data-i18n="loginRemember">Remember this device</label>
+        </span>
+        <a href="#" data-i18n="loginHelp">Need help?</a>
+      </div>
+      <button class="btn-primary" type="submit" data-i18n="loginBtn">Continue to dashboard</button>
+    </form>
+
+    <div class="link-row">
+      <span data-i18n="loginNoAccount">Don't have an account?</span>
+      <a href="signup.html" data-i18n="loginGoSignup">Create one</a>
+    </div>
+  </div>
+
+  <div class="right">
+    <div>
+      <div class="badge">
+        <span class="dot" style="width:7px;height:7px;border-radius:999px;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,0.4);"></span>
+        <span data-i18n="loginBadge">Works in low network areas</span>
+      </div>
+      <div class="info-list">
+        <span><i class="ri-check-fill"></i><span data-i18n="loginPoint1">Single login for all modules: catalog, payments, training and chat.</span></span>
+        <span><i class="ri-check-fill"></i><span data-i18n="loginPoint2">Role-based dashboard depending on seller/buyer/admin selection.</span></span>
+        <span><i class="ri-check-fill"></i><span data-i18n="loginPoint3">In your project, you can replace this form with real backend auth.</span></span>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <strong data-i18n="loginNoteTitle">Presentation idea:</strong>
+      <span data-i18n="loginNoteText">
+        Explain that PIN/OTP is used only for demo. In production you will send OTP via SMS and store user details in a secure database.
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // reuse language from localStorage
+  const translations = {
+    en:{
+      loginTitle:"Welcome back",
+      loginDesc:"Login to manage your village shop, respond to orders, and learn new skills.",
+      loginSeller:"Seller",
+      loginBuyer:"Buyer",
+      loginAdmin:"Admin",
+      loginPhoneLabel:"Mobile number",
+      loginPinLabel:"4 digit PIN / OTP (demo)",
+      loginRemember:"Remember this device",
+      loginHelp:"Need help?",
+      loginBtn:"Continue to dashboard",
+      loginNoAccount:"Don't have an account?",
+      loginGoSignup:"Create one",
+      loginBadge:"Works in low network areas",
+      loginPoint1:"Single login for all modules: catalog, payments, training and chat.",
+      loginPoint2:"Role-based dashboard depending on seller/buyer/admin selection.",
+      loginPoint3:"In your project, you can replace this form with real backend auth.",
+      loginNoteTitle:"Presentation idea:",
+      loginNoteText:"Explain that PIN/OTP is used only for demo. In production you will send OTP via SMS and store user details in a secure database."
+    },
+    hi:{
+      loginTitle:"वापस स्वागत है",
+      loginDesc:"अपने गाँव की दुकान संभालने, ऑर्डर देखने और नई स्किल सीखने के लिए लॉगिन करें।",
+      loginSeller:"सेलर",
+      loginBuyer:"बायर",
+      loginAdmin:"एडमिन",
+      loginPhoneLabel:"मोबाइल नंबर",
+      loginPinLabel:"4 अंकों का पिन / ओटीपी (डेमो)",
+      loginRemember:"इस डिवाइस को याद रखें",
+      loginHelp:"मदद चाहिए?",
+      loginBtn:"डैशबोर्ड पर जाएँ",
+      loginNoAccount:"अकाउंट नहीं है?",
+      loginGoSignup:"नया अकाउंट बनाएँ",
+      loginBadge:"कम नेटवर्क में भी काम करता है",
+      loginPoint1:"एक ही लॉगिन से कैटलॉग, पेमेंट, ट्रेनिंग और चैट की पहुँच।",
+      loginPoint2:"सेलर/बायर/एडमिन के हिसाब से अलग डैशबोर्ड।",
+      loginPoint3:"प्रोजेक्ट में आप इसे असली बैकएंड ऑथ से बदलने की बात बता सकते हैं।",
+      loginNoteTitle:"प्रेजेंटेशन आइडिया:",
+      loginNoteText:"समझाएँ कि अभी PIN/OTP सिर्फ डेमो है। असली सिस्टम में SMS ओटीपी और सुरक्षित डेटाबेस होगा।"
+    },
+    bh:{
+      loginTitle:"फिर से स्वागत बा",
+      loginDesc:"आपन गाँव के दुकान देखे, ऑर्डर संभाले आ नयका स्किल सीखे खातिर लॉगिन करीं।",
+      loginSeller:"सेलर",
+      loginBuyer:"बायर",
+      loginAdmin:"एडमिन",
+      loginPhoneLabel:"मोबाइल नंबर",
+      loginPinLabel:"4 डिजिट पिन / OTP (डेमो)",
+      loginRemember:"ई डिवाइस याद रखीं",
+      loginHelp:"मदद चाहीं?",
+      loginBtn:"डैशबोर्ड पर जाईं",
+      loginNoAccount:"अकाउंट नइखे?",
+      loginGoSignup:"नया अकाउंट बनाईं",
+      loginBadge:"कम नेटवर्क में भी चलेला",
+      loginPoint1:"एके लॉगिन से कैटलॉग, पेमेंट, ट्रेनिंग आ चैट सब पहुँचे योग्य।",
+      loginPoint2:"सेलर/बायर/एडमिन रूले पर अलग-अलग डैशबोर्ड।",
+      loginPoint3:"प्रोजेक्ट में कहीं कि बाद में ई सब असली बैकएंड ऑथ से जुड़ी।",
+      loginNoteTitle:"प्रेजेंटेशन आइडिया:",
+      loginNoteText:"बताईं कि अभी PIN/OTP खाली डेमो बा, असली सिस्टम में SMS ओटीपी आ सुरक्षित डेटाबेस रही।"
+    },
+    mr:{
+      loginTitle:"पुन्हा स्वागत आहे",
+      loginDesc:"आपली गावातील दुकान, ऑर्डर आणि कौशल्ये सांभाळण्यासाठी लॉगिन करा.",
+      loginSeller:"सेलर",
+      loginBuyer:"बायर",
+      loginAdmin:"अॅडमिन",
+      loginPhoneLabel:"मोबाईल नंबर",
+      loginPinLabel:"4 अंकी PIN / OTP (डेमो)",
+      loginRemember:"हा डिव्हाईस लक्षात ठेवा",
+      loginHelp:"मदत हवी?",
+      loginBtn:"डॅशबोर्डवर जा",
+      loginNoAccount:"खाते नाही?",
+      loginGoSignup:"नवीन खाते तयार करा",
+      loginBadge:"कमी नेटवर्कमध्येही कार्यरत",
+      loginPoint1:"एकाच लॉगिनने कॅटलॉग, पेमेंट, ट्रेनिंग आणि चॅट.",
+      loginPoint2:"सेलर/बायर/अॅडमिन या भूमिकेनुसार वेगळा डॅशबोर्ड.",
+      loginPoint3:"प्रोजेक्टमध्ये तुम्ही हे खरे backend authentication ने बदलणार असे सांगू शकता.",
+      loginNoteTitle:"प्रेझेंटेशन आयडिया:",
+      loginNoteText:"समजा की सध्या PIN/OTP फक्त डेमो आहे, प्रत्यक्षात SMS OTP आणि सुरक्षित डेटाबेस वापरला जाईल."
+    },
+    bn:{
+      loginTitle:"আবার স্বাগতম",
+      loginDesc:"গ্রামের দোকান, অর্ডার ও দক্ষতা পরিচালনার জন্য লগইন করুন।",
+      loginSeller:"সেলার",
+      loginBuyer:"বায়ার",
+      loginAdmin:"অ্যাডমিন",
+      loginPhoneLabel:"মোবাইল নম্বর",
+      loginPinLabel:"৪ ডিজিট PIN / OTP (ডেমো)",
+      loginRemember:"এই ডিভাইস মনে রাখুন",
+      loginHelp:"সাহায্য দরকার?",
+      loginBtn:"ড্যাশবোর্ডে যান",
+      loginNoAccount:"অ্যাকাউন্ট নেই?",
+      loginGoSignup:"নতুন অ্যাকাউন্ট খুলুন",
+      loginBadge:"কম নেটওয়ার্কেও কাজ করে",
+      loginPoint1:"এক লগইনেই ক্যাটালগ, পেমেন্ট, ট্রেনিং ও চ্যাট।",
+      loginPoint2:"সেলার/বায়ার/অ্যাডমিন ভূমিকা অনুযায়ী আলাদা ড্যাশবোর্ড।",
+      loginPoint3:"প্রজেক্টে বলতে পারেন, পরে রিয়েল ব্যাকএন্ড অথ যোগ করবেন।",
+      loginNoteTitle:"প্রেজেন্টেশন আইডিয়া:",
+      loginNoteText:"এখন PIN/OTP শুধু ডেমো, আসলে SMS OTP ও সিকিউর ডেটাবেস ব্যবহার হবে – এটা বোঝান।"
+    },
+    ta:{
+      loginTitle:"மீண்டும் வரவேற்கிறோம்",
+      loginDesc:"உங்கள் கிராமக் கடை, ஆர்டர்கள் மற்றும் திறன்களை நிர்வகிக்க லாகின் செய்யுங்கள்.",
+      loginSeller:"விற்பனையாளர்",
+      loginBuyer:"வாங்குபவர்",
+      loginAdmin:"நிர்வாகி",
+      loginPhoneLabel:"மொபைல் எண்",
+      loginPinLabel:"4 இலக்க PIN / OTP (டெமோ)",
+      loginRemember:"இந்த சாதனத்தை நினைவில் வையுங்கள்",
+      loginHelp:"உதவி வேண்டுமா?",
+      loginBtn:"டாஷ்போர்டுக்கு செல்லவும்",
+      loginNoAccount:"அக்கவுண்ட் இல்லை?",
+      loginGoSignup:"புதிய அக்கவுண்ட் உருவாக்கவும்",
+      loginBadge:"குறைந்த நெட்வொர்க் இடங்களிலும் செயல்படும்",
+      loginPoint1:"ஒரே லாகினில் காட்டு அட்டவணை, பேமெண்ட், பயிற்சி மற்றும் சாட்.",
+      loginPoint2:"விற்பனையாளர்/வாங்குபவர்/நிர்வாகி என்ற பாத்திரப்படி வேறு டாஷ்போர்டு.",
+      loginPoint3:"ப்ராஜெக்ட்டில் பின்னர் உண்மையான backend auth சேர்ப்போம் என்று சொல்லலாம்.",
+      loginNoteTitle:"வழங்கல் யோசனை:",
+      loginNoteText:"இப்போது PIN/OTP டெமோ மட்டுமே, உண்மையில் SMS OTP மற்றும் பாதுகாப்பான தரவுத்தளம் பயன்படுத்தப்படும் என்று விளக்குங்கள்."
+    }
+  };
+
+  const langSelect = document.getElementById("langSelect");
+  const i18nEls = document.querySelectorAll("[data-i18n]");
+  function applyLang(lang){
+    const dict = translations[lang] || translations.en;
+    i18nEls.forEach(el=>{
+      const key = el.getAttribute("data-i18n");
+      if(dict[key]) el.innerText = dict[key];
+    });
+  }
+  const savedLang = localStorage.getItem("app_lang") || "en";
+  langSelect.value = savedLang;
+  applyLang(savedLang);
+  langSelect.addEventListener("change",e=>{
+    const lang=e.target.value;
+    localStorage.setItem("app_lang",lang);
+    applyLang(lang);
+  });
+
+  document.getElementById("loginForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    // simple demo navigation
+    window.location.href="dashboard.html";
+  });
+
+  document.querySelectorAll(".role-tab").forEach(tab=>{
+    tab.addEventListener("click",()=>{
+      document.querySelectorAll(".role-tab").forEach(t=>t.classList.remove("active"));
+      tab.classList.add("active");
+    });
+  });
+</script>
+</body>
+</html>

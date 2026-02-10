@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gram Mantri – Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <style>
+    :root{
+      --bg:#020617;
+      --card:#020617;
+      --border:rgba(148,163,184,0.5);
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --accent:#22c55e;
+      --accent-soft:rgba(34,197,94,0.18);
+      --danger:#f97373;
+      --radius-lg:18px;
+      --radius-md:12px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      min-height:100vh;
+      background:radial-gradient(circle at top,#0f172a,#020617 55%,#000);
+      color:var(--text);
+      font-family:"Inter",system-ui,sans-serif;
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      padding:26px 16px;
+    }
+    .app{
+      width:100%;
+      max-width:1240px;
+      border-radius:26px;
+      border:1px solid rgba(148,163,184,0.5);
+      background:#020617;
+      box-shadow:0 24px 60px rgba(15,23,42,0.9);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 18px;
+      border-bottom:1px solid rgba(148,163,184,0.4);
+      background:rgba(15,23,42,0.98);
+      backdrop-filter:blur(16px);
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+    }
+    .brand-logo-wrap{
+      width:38px;height:38px;border-radius:999px;
+      padding:2px;
+      background:conic-gradient(from 180deg,#22c55e,#4f46e5,#22c55e);
+      box-shadow:0 12px 24px rgba(34,197,94,0.7);
+    }
+    .brand-logo{
+      width:100%;height:100%;border-radius:inherit;
+      background:#020617;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:1rem;color:#e5e7eb;
+    }
+    .brand-text span:first-child{
+      font-size:.9rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    }
+    .brand-text span:last-child{
+      font-size:.75rem;color:var(--muted);
+    }
+    .top-right{
+      display:flex;align-items:center;gap:10px;
+    }
+    .status-pill{
+      display:flex;align-items:center;gap:6px;
+      padding:4px 9px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      font-size:.75rem;
+      color:var(--muted);
+    }
+    .status-pill span.dot{
+      width:7px;height:7px;border-radius:999px;
+      background:#22c55e;
+      box-shadow:0 0 0 4px rgba(34,197,94,0.45);
+    }
+    .user-box{
+      display:flex;align-items:center;gap:6px;
+      font-size:.8rem;
+      color:var(--muted);
+    }
+    .user-avatar{
+      width:30px;height:30px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.8);
+      background:radial-gradient(circle at top,#4f46e5,#1f2937);
+      display:flex;align-items:center;justify-content:center;
+      color:#e5e7eb;font-size:1rem;
+    }
+    .btn-ghost{
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:transparent;
+      color:var(--text);
+      padding:4px 10px;
+      font-size:.78rem;
+      display:inline-flex;align-items:center;gap:5px;
+      cursor:pointer;
+    }
+    .main-layout{
+      flex:1;
+      display:grid;
+      grid-template-columns:220px 1fr;
+      min-height:0;
+    }
+    .sidebar{
+      border-right:1px solid rgba(148,163,184,0.35);
+      padding:14px 10px 12px;
+      background:#020617;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .side-section-title{
+      font-size:.7rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;
+    }
+    .side-menu{
+      display:flex;flex-direction:column;gap:4px;
+    }
+    .nav-item{
+      display:flex;align-items:center;gap:8px;
+      padding:6px 8px;
+      border-radius:var(--radius-md);
+      font-size:.8rem;
+      color:var(--muted);
+      cursor:pointer;
+      border:1px solid transparent;
+    }
+    .nav-item i{font-size:1rem;}
+    .nav-item small{font-size:.65rem;margin-left:auto;color:rgba(148,163,184,0.8);}
+    .nav-item.active{
+      background:var(--accent-soft);
+      color:var(--text);
+      border-color:rgba(248,250,252,0.25);
+      box-shadow:0 10px 20px rgba(15,23,42,0.9);
+    }
+    .side-footer{
+      margin-top:auto;
+      font-size:.75rem;
+      color:var(--muted);
+      padding:10px 9px;
+      border-radius:var(--radius-md);
+      border:1px solid rgba(148,163,184,0.6);
+      background:#020617;
+    }
+    .content{
+      padding:14px 16px 18px;
+      min-height:0;
+      overflow-y:auto;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(148,163,184,0.7) transparent;
+    }
+    .content::-webkit-scrollbar{width:6px;}
+    .content::-webkit-scrollbar-thumb{background:rgba(148,163,184,0.7);border-radius:999px;}
+    .content-header{
+      display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;
+    }
+    .content-header h2{
+      font-size:1rem;margin-bottom:2px;
+    }
+    .content-header p{
+      font-size:.78rem;color:var(--muted);
+    }
+    .content-actions{
+      display:flex;align-items:center;gap:8px;
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      gap:6px;padding:6px 12px;border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:#020617;
+      font-size:.78rem;color:var(--text);
+      cursor:pointer;
+    }
+    .btn-primary{
+      border-color:transparent;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#ecfdf3;
+      box-shadow:0 10px 20px rgba(22,163,74,0.7);
+    }
+    .grid-2{
+      display:grid;grid-template-columns:1.1fr 1.1fr;gap:10px;
+    }
+    .card{
+      padding:12px 12px 13px;
+      border-radius:var(--radius-lg);
+      border:1px solid rgba(148,163,184,0.55);
+      background:#020617;
+      box-shadow:0 10px 24px rgba(15,23,42,0.9);
+    }
+    .card-header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;
+    }
+    .card-title-wrap{
+      display:flex;align-items:center;gap:8px;
+    }
+    .icon-pill{
+      width:32px;height:32px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(circle at top,#22c55e,#15803d);
+      color:#ecfdf3;font-size:1rem;
+    }
+    .card h3{
+      font-size:.9rem;margin-bottom:2px;
+    }
+    .card-sub{
+      font-size:.75rem;color:var(--muted);
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:5px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      font-size:.72rem;color:var(--muted);
+    }
+    .stats-row{
+      margin-top:8px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+    }
+    .stat-card{
+      padding:8px;
+      border-radius:12px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:#020617;
+      font-size:.75rem;
+    }
+    .stat-label{color:var(--muted);font-size:.72rem;}
+    .stat-value{font-size:1rem;font-weight:600;margin-top:2px;}
+    .stat-pill{margin-top:3px;font-size:.68rem;color:var(--muted);}
+    .products-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .product-card{
+      padding:8px 8px 9px;
+      border-radius:12px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:#020617;
+      font-size:.75rem;
+    }
+    .product-name{font-weight:500;}
+    .product-meta{font-size:.68rem;color:var(--muted);}
+    .product-price{font-size:.82rem;font-weight:600;color:#bbf7d0;margin-top:2px;}
+    .product-footer{
+      margin-top:4px;
+      display:flex;align-items:center;justify-content:space-between;
+      font-size:.68rem;color:var(--muted);
+    }
+    .product-footer span.badge{
+      padding:2px 6px;border-radius:999px;border:1px solid rgba(148,163,184,0.7);
+      background:#020617;
+    }
+    .product-footer button{
+      border:none;border-radius:999px;padding:2px 7px;
+      background:#020617;
+      color:#38bdf8;font-size:.7rem;
+      display:inline-flex;align-items:center;gap:4px;
+      cursor:pointer;
+    }
+    .form-inline{
+      display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;font-size:.75rem;
+    }
+    .form-inline input{
+      border-radius:999px;border:1px solid rgba(148,163,184,0.6);
+      background:#020617;color:var(--text);
+      padding:4px 8px;outline:none;
+    }
+    .form-inline select{
+      border-radius:999px;border:1px solid rgba(148,163,184,0.6);
+      background:#020617;color:var(--text);
+      padding:4px 8px;outline:none;
+      font-size:.75rem;
+    }
+    .form-inline button{
+      border-radius:999px;border:none;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#ecfdf3;font-size:.75rem;
+      padding:4px 10px;cursor:pointer;
+      display:inline-flex;align-items:center;gap:4px;
+    }
+    .orders-list{
+      margin-top:8px;
+      font-size:.75rem;
+    }
+    .orders-list table{
+      width:100%;
+      border-collapse:collapse;
+    }
+    .orders-list th,.orders-list td{
+      border-bottom:1px solid rgba(55,65,81,0.9);
+      padding:4px 3px;
+      text-align:left;
+      font-size:.72rem;
+    }
+    .orders-list th{color:var(--muted);font-weight:500;}
+    .orders-list td.amount{color:#bbf7d0;}
+    .orders-list td.status{font-size:.7rem;}
+    .badge-status{
+      padding:2px 6px;border-radius:999px;border:1px solid rgba(148,163,184,0.7);
+      font-size:.68rem;
+    }
+    .badge-paid{color:#4ade80;border-color:#4ade80;}
+    .badge-pending{color:#facc15;border-color:#facc15;}
+    .reviews-list{
+      margin-top:8px;
+      display:flex;flex-direction:column;gap:6px;
+      font-size:.72rem;color:var(--muted);
+    }
+    .review-item{
+      padding:5px 7px;
+      border-radius:10px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:#020617;
+    }
+    .review-header{display:flex;justify-content:space-between;align-items:center;}
+    .review-header span.name{font-weight:500;color:var(--text);}
+    .review-stars{color:#facc15;font-size:.75rem;}
+    .review-footer{
+      display:flex;justify-content:space-between;
+      font-size:.64rem;color:var(--muted);margin-top:2px;
+    }
+    .review-form{
+      margin-top:6px;
+      display:grid;grid-template-columns:1fr auto;gap:6px;
+    }
+    .review-form input{
+      border-radius:999px;border:1px solid rgba(148,163,184,0.6);
+      background:#020617;color:var(--text);
+      font-size:.72rem;padding:4px 8px;outline:none;
+    }
+    .review-form button{
+      border-radius:999px;border:none;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#ecfdf3;font-size:.72rem;
+      padding:4px 9px;cursor:pointer;
+      display:inline-flex;align-items:center;gap:4px;
+    }
+    .profile-row{
+      display:flex;gap:6px;margin-top:4px;font-size:.75rem;flex-wrap:wrap;
+    }
+    .profile-pill{
+      padding:5px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:#020617;
+      display:flex;align-items:center;gap:6px;
+      cursor:pointer;
+    }
+    .profile-pill.active{
+      border-color:rgba(248,250,252,0.4);
+      background:var(--accent-soft);
+      color:var(--text);
+    }
+    .mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:8px;font-size:.73rem;color:var(--muted);}
+    .mini-card{
+      padding:6px 7px;
+      border-radius:12px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:#020617;
+    }
+    .mini-card span.label{font-size:.68rem;color:rgba(148,163,184,0.9);}
+    .mini-card strong{font-size:.8rem;color:var(--text);}
+    @media(max-width:980px){
+      .main-layout{grid-template-columns:190px 1fr;}
+    }
+    @media(max-width:820px){
+      body{padding:18px 10px;}
+      .main-layout{grid-template-columns:1fr;}
+      .sidebar{flex-direction:row;overflow-x:auto;padding-bottom:10px;}
+      .side-menu{flex-direction:row;gap:6px;}
+      .nav-item{min-width:150px;}
+      .side-footer{display:none;}
+      .grid-2{grid-template-columns:1fr;}
+      .stats-row{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo-wrap"><div class="brand-logo">GM</div></div>
+      <div class="brand-text">
+        <span>Gram Mitra</span>
+        <span>Working dashboard for a village shop</span>
+      </div>
+    </div>
+    <div class="top-right">
+      <div class="status-pill">
+        <span class="dot"></span>
+        <span id="statusText">Local data saved • Single‑user mode</span>
+      </div>
+      <div class="user-box">
+        <span id="currentRoleLabel">Role: Seller</span>
+        <div class="user-avatar"><i class="ri-user-heart-line"></i></div>
+        <button class="btn-ghost" id="logoutBtn"><i class="ri-logout-box-r-line"></i>Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <aside class="sidebar">
+      <div>
+        <div class="side-section-title">Main</div>
+        <div class="side-menu">
+          <div class="nav-item active" data-section="overview">
+            <i class="ri-layout-grid-line"></i>
+            <span>Overview</span>
+            <small>Home</small>
+          </div>
+          <div class="nav-item" data-section="products">
+            <i class="ri-store-3-line"></i>
+            <span>Products</span>
+            <small>Sell</small>
+          </div>
+          <div class="nav-item" data-section="orders">
+            <i class="ri-shopping-bag-4-line"></i>
+            <span>Orders</span>
+            <small>Buyers</small>
+          </div>
+          <div class="nav-item" data-section="payments">
+            <i class="ri-bank-card-line"></i>
+            <span>Payments</span>
+            <small>Money</small>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="side-section-title">Customers & Learning</div>
+        <div class="side-menu">
+          <div class="nav-item" data-section="reviews">
+            <i class="ri-star-smile-line"></i>
+            <span>Reviews</span>
+            <small>Trust</small>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="side-section-title">Settings</div>
+        <div class="side-menu">
+          <div class="nav-item" data-section="profile">
+            <i class="ri-user-settings-line"></i>
+            <span>Profile</span>
+            <small>Role</small>
+          </div>
+        </div>
+      </div>
+      <div class="side-footer">
+        <span>
+          All data here is stored only in your browser using localStorage.  
+          Clearing browser data will reset the dashboard.
+        </span>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="content-header">
+        <div>
+          <h2 id="sectionTitle">Overview</h2>
+          <p id="sectionSubtitle">Quick view of products, orders and wallet.</p>
+        </div>
+        <div class="content-actions">
+          <button class="btn" id="refreshBtn"><i class="ri-refresh-line"></i>Refresh</button>
+        </div>
+      </div>
+
+      <!-- Overview -->
+      <section id="section-overview" class="section">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title-wrap">
+                <div class="icon-pill"><i class="ri-compass-3-line"></i></div>
+                <div>
+                  <h3>Today</h3>
+                  <p class="card-sub">Live stats based on data in this dashboard.</p>
+                </div>
+              </div>
+              <span class="chip"><i class="ri-information-line"></i>Single‑user prototype</span>
+            </div>
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-label">Active products</div>
+                <div class="stat-value" id="statProducts">0</div>
+                <div class="stat-pill">Items in your catalog</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Orders</div>
+                <div class="stat-value" id="statOrders">0</div>
+                <div class="stat-pill">Total orders stored</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Wallet (₹)</div>
+                <div class="stat-value" id="statWallet">0</div>
+                <div class="stat-pill">Amount from paid orders</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title-wrap">
+                <div class="icon-pill"><i class="ri-flag-line"></i></div>
+                <div>
+                  <h3>Next actions</h3>
+                  <p class="card-sub">Simple checklist for the day.</p>
+                </div>
+              </div>
+            </div>
+            <ul style="margin-top:6px;font-size:.75rem;color:var(--muted);">
+              <li id="todo1">Add at least one new product.</li>
+              <li id="todo2">Check pending orders and mark them paid when delivered.</li>
+              <li id="todo3">Ask one customer to give a review.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Products -->
+      <section id="section-products" class="section" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="icon-pill"><i class="ri-store-3-line"></i></div>
+              <div>
+                <h3>Products</h3>
+                <p class="card-sub">Your catalog visible to buyers.</p>
+              </div>
+            </div>
+          </div>
+          <form id="productForm" class="form-inline">
+            <input type="text" id="prodName" placeholder="Name e.g. Achar bottle" required>
+            <input type="number" id="prodPrice" placeholder="Price ₹" required>
+            <select id="prodStatus">
+              <option value="in_stock">In stock</option>
+              <option value="out_of_stock">Out of stock</option>
+            </select>
+            <button type="submit"><i class="ri-add-line"></i><span id="prodFormBtnLabel">Add product</span></button>
+            <input type="hidden" id="prodId">
+          </form>
+          <div class="products-grid" id="productsGrid"></div>
+        </div>
+      </section>
+
+      <!-- Orders -->
+      <section id="section-orders" class="section" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="icon-pill"><i class="ri-shopping-bag-4-line"></i></div>
+              <div>
+                <h3>Orders</h3>
+                <p class="card-sub">Use this like a simple order register.</p>
+              </div>
+            </div>
+          </div>
+          <form id="orderForm" class="form-inline">
+            <input type="text" id="orderProduct" placeholder="Product name" required>
+            <input type="number" id="orderAmount" placeholder="Amount ₹" required>
+            <select id="orderStatus">
+              <option value="pending">Pending</option>
+              <option value="paid">Paid</option>
+            </select>
+            <button type="submit"><i class="ri-add-line"></i>Add order</button>
+          </form>
+          <div class="orders-list">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Payments -->
+      <section id="section-payments" class="section" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="icon-pill"><i class="ri-bank-card-line"></i></div>
+              <div>
+                <h3>Wallet & payments</h3>
+                <p class="card-sub">Wallet updates automatically from paid orders.</p>
+              </div>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <div style="font-size:.76rem;color:var(--muted);margin-bottom:4px;">Wallet</div>
+              <div class="mini-grid">
+                <div class="mini-card">
+                  <span class="label">Balance</span>
+                  <strong id="walletBalance">₹ 0</strong>
+                </div>
+                <div class="mini-card">
+                  <span class="label">Paid orders</span>
+                  <strong id="walletPaidOrders">0</strong>
+                </div>
+                <div class="mini-card">
+                  <span class="label">Pending orders</span>
+                  <strong id="walletPendingOrders">0</strong>
+                </div>
+                <div class="mini-card">
+                  <span class="label">Last updated</span>
+                  <strong id="walletUpdated">–</strong>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:.76rem;color:var(--muted);margin-bottom:4px;">How to use this screen</div>
+              <ul style="font-size:.75rem;color:var(--muted);margin-left:16px;">
+                <li>Whenever an order is marked as “Paid”, wallet balance increases.</li>
+                <li>Use this number when you actually transfer money to your bank.</li>
+                <li>Pending orders are those where customer has not paid yet.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews -->
+      <section id="section-reviews" class="section" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="icon-pill"><i class="ri-star-smile-line"></i></div>
+              <div>
+                <h3>Customer reviews</h3>
+                <p class="card-sub">Store feedback from buyers and improve service.</p>
+              </div>
+            </div>
+          </div>
+          <div class="reviews-list" id="reviewsList"></div>
+          <form class="review-form" id="reviewForm">
+            <input id="reviewInput" type="text" placeholder="Write a short review (yourself, for testing)..." required>
+            <button type="submit">
+              <i class="ri-send-plane-line"></i>
+              <span>Save</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Profile -->
+      <section id="section-profile" class="section" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="icon-pill"><i class="ri-user-settings-line"></i></div>
+              <div>
+                <h3>Profile & role</h3>
+                <p class="card-sub">Choose how you want to use the dashboard.</p>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:4px;">Current role affects which actions are enabled.</div>
+          <div class="profile-row">
+            <div class="profile-pill active" data-role="seller">
+              <i class="ri-store-2-line" style="color:#22c55e;"></i><span>Seller</span>
+            </div>
+            <div class="profile-pill" data-role="buyer">
+              <i class="ri-user-line" style="color:#38bdf8;"></i><span>Buyer</span>
+            </div>
+            <div class="profile-pill" data-role="admin">
+              <i class="ri-admin-line" style="color:#f97316;"></i><span>Admin</span>
+            </div>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-card">
+              <span class="label">Can access</span>
+              <strong id="profAccess">Add products, record orders, view wallet</strong>
+            </div>
+            <div class="mini-card">
+              <span class="label">Cannot access</span>
+              <strong id="profBlock">Admin‑only reports</strong>
+            </div>
+            <div class="mini-card">
+              <span class="label">Ideal user</span>
+              <strong id="profIdeal">Shop owner</strong>
+            </div>
+            <div class="mini-card">
+              <span class="label">Note</span>
+              <strong id="profMsg">This role is used only inside this browser (no server yet).</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  // Simple data layer using localStorage
+  const STORAGE_KEYS = {
+    products: "gm_products",
+    orders: "gm_orders",
+    reviews: "gm_reviews",
+    role: "gm_role"
+  };
+
+  function loadData(key, fallback){
+    try{
+      const raw = localStorage.getItem(key);
+      if(!raw) return fallback;
+      return JSON.parse(raw);
+    }catch(e){
+      return fallback;
+    }
+  }
+  function saveData(key, value){
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  // STATE
+  let products = loadData(STORAGE_KEYS.products, []);
+  let orders   = loadData(STORAGE_KEYS.orders, []);
+  let reviews  = loadData(STORAGE_KEYS.reviews, []);
+  let currentRole = localStorage.getItem(STORAGE_KEYS.role) || "seller";
+
+  // ELEMENTS
+  const navItems = document.querySelectorAll(".nav-item");
+  const sections = document.querySelectorAll(".section");
+  const sectionTitle = document.getElementById("sectionTitle");
+  const sectionSubtitle = document.getElementById("sectionSubtitle");
+  const refreshBtn = document.getElementById("refreshBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const currentRoleLabel = document.getElementById("currentRoleLabel");
+
+  // Overview stats
+  const statProducts = document.getElementById("statProducts");
+  const statOrders = document.getElementById("statOrders");
+  const statWallet = document.getElementById("statWallet");
+
+  // Products
+  const productsGrid = document.getElementById("productsGrid");
+  const productForm = document.getElementById("productForm");
+  const prodName = document.getElementById("prodName");
+  const prodPrice = document.getElementById("prodPrice");
+  const prodStatus = document.getElementById("prodStatus");
+  const prodId = document.getElementById("prodId");
+  const prodFormBtnLabel = document.getElementById("prodFormBtnLabel");
+
+  // Orders
+  const orderForm = document.getElementById("orderForm");
+  const orderProduct = document.getElementById("orderProduct");
+  const orderAmount = document.getElementById("orderAmount");
+  const orderStatus = document.getElementById("orderStatus");
+  const ordersTableBody = document.getElementById("ordersTableBody");
+
+  // Payments
+  const walletBalance = document.getElementById("walletBalance");
+  const walletPaidOrders = document.getElementById("walletPaidOrders");
+  const walletPendingOrders = document.getElementById("walletPendingOrders");
+  const walletUpdated = document.getElementById("walletUpdated");
+
+  // Reviews
+  const reviewsList = document.getElementById("reviewsList");
+  const reviewForm = document.getElementById("reviewForm");
+  const reviewInput = document.getElementById("reviewInput");
+
+  // Profile
+  const profilePills = document.querySelectorAll(".profile-pill");
+  const profAccess = document.getElementById("profAccess");
+  const profBlock = document.getElementById("profBlock");
+  const profIdeal = document.getElementById("profIdeal");
+  const profMsg = document.getElementById("profMsg");
+
+  const roleInfo = {
+    seller:{
+      access:"Add products, record orders, view wallet",
+      block:"Admin‑only reports",
+      ideal:"Shop owner",
+      msg:"Use this view when you act as the shop owner."
+    },
+    buyer:{
+      access:"View products and orders list",
+      block:"Adding products or orders",
+      ideal:"Customer or testing as buyer",
+      msg:"Add realistic orders manually when you buy something."
+    },
+    admin:{
+      access:"All screens",
+      block:"Real bank access (not connected yet)",
+      ideal:"NGO / panchayat staff",
+      msg:"Use this view to check that data is consistent."
+    }
+  };
+
+  // NAVIGATION
+  const sectionMeta = {
+    overview:{title:"Overview",sub:"Quick view of products, orders and wallet."},
+    products:{title:"Products",sub:"Add and edit items in your catalog."},
+    orders:{title:"Orders",sub:"Record orders from your customers."},
+    payments:{title:"Payments",sub:"Wallet balance based on paid orders."},
+    reviews:{title:"Reviews",sub:"Keep feedback from customers."},
+    profile:{title:"Profile",sub:"Change the role you are using."}
+  };
+
+  navItems.forEach(item=>{
+    item.addEventListener("click",()=>{
+      navItems.forEach(n=>n.classList.remove("active"));
+      item.classList.add("active");
+      const sec = item.getAttribute("data-section");
+      sections.forEach(s=>s.style.display="none");
+      document.getElementById("section-"+sec).style.display="block";
+      const meta = sectionMeta[sec];
+      if(meta){
+        sectionTitle.innerText = meta.title;
+        sectionSubtitle.innerText = meta.sub;
+      }
+    });
+  });
+
+  logoutBtn.addEventListener("click",()=>{
+    window.location.href = "login.html";
+  });
+
+  refreshBtn.addEventListener("click",()=>renderAll());
+
+  // RENDER FUNCTIONS
+  function renderProducts(){
+    productsGrid.innerHTML = "";
+    if(products.length === 0){
+      const p = document.createElement("p");
+      p.style.fontSize = ".75rem";
+      p.style.color = "#94a3b8";
+      p.innerText = "No products yet. Add your first product above.";
+      productsGrid.appendChild(p);
+      return;
+    }
+    products.forEach(p=>{
+      const card = document.createElement("div");
+      card.className = "product-card";
+      card.innerHTML = `
+        <div class="product-name">${p.name}</div>
+        <div class="product-meta">${p.status === "in_stock" ? "In stock" : "Out of stock"}</div>
+        <div class="product-price">₹ ${p.price}</div>
+        <div class="product-footer">
+          <span class="badge">${p.status === "in_stock" ? "Available" : "Not available"}</span>
+          <div style="display:flex;gap:4px;">
+            <button data-id="${p.id}" data-action="edit"><i class="ri-pencil-line"></i>Edit</button>
+            <button data-id="${p.id}" data-action="delete" style="color:#f97373;"><i class="ri-delete-bin-6-line"></i>Delete</button>
+          </div>
+        </div>`;
+      productsGrid.appendChild(card);
+    });
+  }
+
+  function renderOrders(){
+    ordersTableBody.innerHTML = "";
+    if(orders.length === 0){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="5" style="font-size:.75rem;color:#94a3b8;">No orders yet. Add orders whenever you sell something.</td>`;
+      ordersTableBody.appendChild(tr);
+      return;
+    }
+    orders.forEach(o=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${o.product}</td>
+        <td class="amount">₹ ${o.amount}</td>
+        <td class="status">
+          <span class="badge-status ${o.status === "paid" ? "badge-paid" : "badge-pending"}">
+            ${o.status === "paid" ? "Paid" : "Pending"}
+          </span>
+        </td>
+        <td>${o.date}</td>
+        <td><button data-id="${o.id}" data-action="toggleStatus" style="border:none;background:none;color:#38bdf8;font-size:.72rem;cursor:pointer;">Toggle</button></td>
+      `;
+      ordersTableBody.appendChild(tr);
+    });
+  }
+
+  function computeWallet(){
+    let paidSum = 0;
+    let paidCount = 0;
+    let pendingCount = 0;
+    orders.forEach(o=>{
+      if(o.status === "paid"){
+        paidSum += Number(o.amount) || 0;
+        paidCount++;
+      }else{
+        pendingCount++;
+      }
+    });
+    return {paidSum, paidCount, pendingCount};
+  }
+
+  function renderWallet(){
+    const {paidSum, paidCount, pendingCount} = computeWallet();
+    walletBalance.innerText = `₹ ${paidSum}`;
+    walletPaidOrders.innerText = paidCount;
+    walletPendingOrders.innerText = pendingCount;
+    walletUpdated.innerText = new Date().toLocaleString();
+  }
+
+  function renderReviews(){
+    reviewsList.innerHTML = "";
+    if(reviews.length === 0){
+      const p = document.createElement("p");
+      p.style.fontSize = ".75rem";
+      p.style.color = "#94a3b8";
+      p.innerText = "No reviews saved. When a customer says something good, type it here and save.";
+      reviewsList.appendChild(p);
+      return;
+    }
+    reviews.forEach(r=>{
+      const item = document.createElement("div");
+      item.className = "review-item";
+      item.innerHTML = `
+        <div class="review-header">
+          <span class="name">${r.name}</span>
+          <span class="review-stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</span>
+        </div>
+        <p>${r.text}</p>
+        <div class="review-footer">
+          <span>${r.meta}</span>
+          <span>${r.date}</span>
+        </div>`;
+      reviewsList.appendChild(item);
+    });
+  }
+
+  function renderStats(){
+    const {paidSum} = computeWallet();
+    statProducts.innerText = products.length;
+    statOrders.innerText = orders.length;
+    statWallet.innerText = paidSum;
+  }
+
+  function renderRole(){
+    currentRoleLabel.innerText = "Role: " + currentRole.charAt(0).toUpperCase() + currentRole.slice(1);
+    profilePills.forEach(p=>{
+      p.classList.toggle("active", p.dataset.role === currentRole);
+    });
+    const info = roleInfo[currentRole];
+    profAccess.innerText = info.access;
+    profBlock.innerText = info.block;
+    profIdeal.innerText = info.ideal;
+    profMsg.innerText = info.msg;
+
+    // Disable some actions for buyer
+    const isBuyer = currentRole === "buyer";
+    productForm.querySelector("button").disabled = isBuyer;
+    orderForm.querySelector("button").disabled = isBuyer;
+    productForm.querySelector("button").style.opacity = isBuyer ? 0.5 : 1;
+    orderForm.querySelector("button").style.opacity = isBuyer ? 0.5 : 1;
+  }
+
+  function renderAll(){
+    renderProducts();
+    renderOrders();
+    renderWallet();
+    renderReviews();
+    renderStats();
+    renderRole();
+  }
+
+  // FORM HANDLERS
+  productForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    if(currentRole === "buyer"){
+      alert("As a buyer role, you cannot add products. Switch to seller or admin.");
+      return;
+    }
+    const name = prodName.value.trim();
+    const price = Number(prodPrice.value);
+    const status = prodStatus.value;
+    if(!name || !price){
+      alert("Please enter valid product name and price.");
+      return;
+    }
+    const id = prodId.value;
+    if(id){ // edit
+      const index = products.findIndex(p=>p.id === id);
+      if(index !== -1){
+        products[index].name = name;
+        products[index].price = price;
+        products[index].status = status;
+      }
+      prodFormBtnLabel.innerText = "Add product";
+    }else{ // new
+      products.push({
+        id: "p_"+Date.now(),
+        name,
+        price,
+        status
+      });
+    }
+    saveData(STORAGE_KEYS.products, products);
+    prodName.value = "";
+    prodPrice.value = "";
+    prodStatus.value = "in_stock";
+    prodId.value = "";
+    renderAll();
+  });
+
+  productsGrid.addEventListener("click",e=>{
+    const btn = e.target.closest("button");
+    if(!btn) return;
+    const id = btn.dataset.id;
+    const action = btn.dataset.action;
+    if(action === "delete"){
+      products = products.filter(p=>p.id !== id);
+      saveData(STORAGE_KEYS.products, products);
+      renderAll();
+    }else if(action === "edit"){
+      const p = products.find(p=>p.id === id);
+      if(!p) return;
+      prodName.value = p.name;
+      prodPrice.value = p.price;
+      prodStatus.value = p.status;
+      prodId.value = p.id;
+      prodFormBtnLabel.innerText = "Update product";
+      // jump to top of products section
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+  });
+
+  orderForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    if(currentRole === "buyer"){
+      alert("As a buyer role, you cannot add orders. Switch to seller or admin.");
+      return;
+    }
+    const product = orderProduct.value.trim();
+    const amount = Number(orderAmount.value);
+    const status = orderStatus.value;
+    if(!product || !amount){
+      alert("Please enter valid product and amount.");
+      return;
+    }
+    orders.push({
+      id: "o_"+Date.now(),
+      product,
+      amount,
+      status,
+      date: new Date().toLocaleDateString()
+    });
+    saveData(STORAGE_KEYS.orders, orders);
+    orderProduct.value = "";
+    orderAmount.value = "";
+    orderStatus.value = "pending";
+    renderAll();
+  });
+
+  ordersTableBody.addEventListener("click",e=>{
+    const btn = e.target.closest("button");
+    if(!btn) return;
+    const id = btn.dataset.id;
+    const action = btn.dataset.action;
+    if(action === "toggleStatus"){
+      const idx = orders.findIndex(o=>o.id === id);
+      if(idx !== -1){
+        orders[idx].status = orders[idx].status === "paid" ? "pending" : "paid";
+        saveData(STORAGE_KEYS.orders, orders);
+        renderAll();
+      }
+    }
+  });
+
+  reviewForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    const text = reviewInput.value.trim();
+    if(!text) return;
+    reviews.push({
+      name:"Customer",
+      text,
+      stars:5,
+      meta:"Local buyer",
+      date:new Date().toLocaleDateString()
+    });
+    saveData(STORAGE_KEYS.reviews, reviews);
+    reviewInput.value = "";
+    renderReviews();
+  });
+
+  profilePills.forEach(p=>{
+    p.addEventListener("click",()=>{
+      currentRole = p.dataset.role;
+      localStorage.setItem(STORAGE_KEYS.role, currentRole);
+      renderRole();
+    });
+  });
+
+  // INIT
+  renderAll();
+</script>
+</body>
+</html>
+

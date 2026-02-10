@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GramMitra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css">
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #020617;
+      --accent: #22c55e;
+      --accent2: #7c3aed;
+      --card: #020617;
+      --border: rgba(148,163,184,0.45);
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --radius-lg: 20px;
+      --radius-md: 12px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:"Inter",system-ui,sans-serif;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top,#1d253a,#020617 55%,#000 100%);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 16px;
+    }
+    .shell{
+      width:100%;
+      max-width:1120px;
+      background:linear-gradient(135deg,rgba(15,23,42,0.96),rgba(15,23,42,0.98));
+      border-radius:32px;
+      border:1px solid rgba(148,163,184,0.55);
+      overflow:hidden;
+      box-shadow:0 30px 80px rgba(15,23,42,0.9);
+      display:grid;
+      grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
+    }
+    .left{
+      padding:32px 40px;
+      border-right:1px solid rgba(148,163,184,0.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .left::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background:
+        radial-gradient(circle at 0 0,rgba(56,189,248,0.24),transparent 60%),
+        radial-gradient(circle at 100% 100%,rgba(59,130,246,0.18),transparent 60%);
+      opacity:0.75;
+      z-index:-1;
+    }
+    .right{
+      padding:32px 32px;
+      background:
+        radial-gradient(circle at top,rgba(30,64,175,0.35),rgba(15,23,42,1));
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      overflow-y:auto;
+      max-height:640px;
+    }
+    .brand-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:24px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .brand-logo-wrap{
+      width:44px;height:44px;
+      border-radius:999px;
+      padding:2px;
+      background:conic-gradient(from 200deg,#22c55e,#22c55e,#4f46e5,#22c55e);
+      box-shadow:0 10px 26px rgba(34,197,94,0.7);
+    }
+    .brand-logo{
+      width:100%;height:100%;
+      border-radius:inherit;
+      background:radial-gradient(circle at 30% 0,#0f172a,#020617);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:#e5e7eb;
+      font-size:1.1rem;
+    }
+    .brand-text span:first-child{
+      font-size:.9rem;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .brand-text span:last-child{
+      font-size:.75rem;
+      color:var(--muted);
+    }
+    .lang-box{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.94);
+    }
+    .lang-box select{
+      border:none;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-size:.8rem;
+      font-weight:500;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.6);
+      background:rgba(15,23,42,0.96);
+      color:var(--muted);
+      font-size:.75rem;
+      margin-bottom:8px;
+    }
+    .chip span.dot{
+      width:7px;height:7px;border-radius:999px;
+      background:#22c55e;
+      box-shadow:0 0 0 4px rgba(34,197,94,0.4);
+    }
+    h1{
+      font-size:2.25rem;
+      line-height:1.2;
+      letter-spacing:-0.03em;
+      margin-bottom:10px;
+    }
+    .grad{
+      background:linear-gradient(135deg,#22c55e,#4ade80,#facc15);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .subtitle{
+      font-size:.9rem;
+      color:var(--muted);
+      max-width:430px;
+      margin-bottom:22px;
+    }
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom:20px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:9px 18px;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-size:.85rem;
+      font-weight:600;
+      cursor:pointer;
+      text-decoration:none;
+      transition:all .18s ease;
+    }
+    .btn-primary{
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      color:#ecfdf3;
+      box-shadow:0 14px 26px rgba(22,163,74,0.7);
+    }
+    .btn-primary:hover{transform:translateY(-1px);}
+    .btn-secondary{
+      background:rgba(15,23,42,0.98);
+      border-color:rgba(148,163,184,0.7);
+      color:var(--text);
+    }
+    .stats-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      font-size:.75rem;
+    }
+    .stat-pill{
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(15,23,42,0.96);
+      border:1px solid rgba(148,163,184,0.6);
+      display:flex;
+      align-items:center;
+      gap:6px;
+      color:var(--muted);
+    }
+    .stat-pill strong{color:#bbf7d0;font-size:.8rem;}
+    .hero-card{
+      margin-top:28px;
+      padding:18px 18px 20px;
+      border-radius:var(--radius-lg);
+      border:1px solid rgba(148,163,184,0.6);
+      background:radial-gradient(circle at top,rgba(15,23,42,0.98),rgba(15,23,42,1));
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+      gap:14px;
+    }
+    .hero-left p{
+      font-size:.8rem;
+      color:var(--muted);
+      margin:6px 0 10px;
+    }
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+    .tag{
+      font-size:.7rem;
+      padding:3px 9px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.5);
+      color:var(--muted);
+      background:#020617;
+    }
+    .hero-right{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      font-size:.75rem;
+      color:var(--muted);
+    }
+    .avatar{
+      width:56px;height:56px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(circle at top,#22c55e,#15803d);
+      color:#ecfdf3;font-size:1.3rem;font-weight:700;
+      border:2px solid rgba(190,242,100,0.9);
+      box-shadow:0 14px 30px rgba(22,163,74,0.9);
+    }
+    .pill-mini{
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      background:rgba(15,23,42,0.96);
+    }
+    .timeline{
+      width:100%;height:4px;border-radius:999px;
+      background:#1f2937;overflow:hidden;
+    }
+    .timeline span{
+      display:block;height:100%;
+      background:linear-gradient(90deg,#22c55e,#facc15,#fb923c);
+      animation:line 18s linear infinite;
+      transform-origin:left;
+    }
+    @keyframes line{0%{transform:scaleX(0);}100%{transform:scaleX(1);}}
+    /* Right side base panel */
+    .panel{
+      border-radius:var(--radius-lg);
+      border:1px solid rgba(148,163,184,0.6);
+      background:radial-gradient(circle at top,rgba(15,23,42,0.98),rgba(15,23,42,1));
+      padding:18px 18px 20px;
+    }
+    .panel h3{
+      font-size:.9rem;
+      margin-bottom:4px;
+    }
+    .panel p{
+      font-size:.8rem;
+      color:var(--muted);
+    }
+    .list{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-size:.78rem;
+      color:var(--muted);
+    }
+    .list-item{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+    }
+    .footer-note{
+      font-size:.75rem;
+      color:var(--muted);
+      margin-top:10px;
+    }
+
+
+    /* Embedded Gram Mitra Support (chat) styles adapted */
+    .gm-chat-header {
+      background:#985F99;
+      color:white;
+      padding:10px 12px;
+      border-radius:12px 12px 0 0;
+      font-size:0.9rem;
+      font-weight:600;
+      text-align:center;
+      margin:-18px -18px 10px -18px;
+    }
+    .gm-chat-wrapper{
+      max-width:100%;
+      margin:auto;
+    }
+    .gm-messages{
+      background:#f6f1ec;
+      border-radius:14px;
+      padding:10px;
+      height:220px;
+      overflow-y:auto;
+      box-shadow:0 2px 8px rgba(0,0,0,0.15);
+      color:#111827;
+      font-size:0.8rem;
+    }
+    .gm-message{
+      margin-bottom:8px;
+      line-height:1.4;
+    }
+    .gm-ai{ text-align:left; color:#333; }
+    .gm-user{ text-align:right; color:#3b2416; }
+    .gm-table{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:8px;
+      margin-top:8px;
+    }
+    .gm-table button{
+      padding:8px;
+      border-radius:10px;
+      border:none;
+      background:#f2e5da;
+      font-size:0.75rem;
+      cursor:pointer;
+    }
+    .gm-options button{
+      margin:4px 4px 0 0;
+      padding:5px 8px;
+      font-size:0.7rem;
+      border-radius:8px;
+      border:none;
+      background:#f2e5da;
+      cursor:pointer;
+    }
+    .gm-input-box{
+      display:flex;
+      gap:6px;
+      margin-top:8px;
+    }
+    .gm-input-box input{
+      flex:1;
+      padding:8px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      font-size:0.8rem;
+    }
+    .gm-send{
+      background:#c46a3a;
+      color:white;
+      border:none;
+      padding:8px 10px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:0.8rem;
+      white-space:nowrap;
+    }
+
+
+    /* Embedded NGO Collaboration mini-form styles adapted */
+    .ngo-container{
+      background:#f7efe8;
+      border-radius:14px;
+      padding:14px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.18);
+      color:#111827;
+    }
+    .ngo-container h4{
+      margin:0 0 8px 0;
+      color:#6b3f2a;
+      font-size:0.95rem;
+      text-align:left;
+    }
+    .ngo-container input,
+    .ngo-container select,
+    .ngo-container textarea{
+      width:100%;
+      margin-top:8px;
+      padding:8px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      font-size:0.8rem;
+      box-sizing:border-box;
+    }
+    .ngo-container button{
+      width:100%;
+      margin-top:10px;
+      padding:9px;
+      border-radius:10px;
+      border:none;
+      background:#c46a3a;
+      color:white;
+      font-size:0.85rem;
+      cursor:pointer;
+    }
+    .ngo-success{
+      margin-top:10px;
+      padding:8px;
+      background:#d4edda;
+      border-radius:10px;
+      color:#155724;
+      font-weight:500;
+      font-size:0.8rem;
+      text-align:center;
+      display:none;
+    }
+
+
+    @media(max-width:900px){
+      .shell{grid-template-columns:minmax(0,1fr);}
+      .left{border-right:none;border-bottom:1px solid rgba(148,163,184,0.35);}
+      .hero-card{grid-template-columns:1fr;}
+      .right{max-height:none;}
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+  <div class="left">
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-logo-wrap">
+          <div class="brand-logo">GM</div>
+        </div>
+        <div class="brand-text">
+          <span data-i18n="brandTitle">GramMitra</span>
+          <span data-i18n="brandSubtitle">Digital haat for village entrepreneurs</span>
+        </div>
+      </div>
+      <div class="lang-box">
+        <i class="ri-translate-2"></i>
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="bh">भोजपुरी</option>
+          <option value="mr">मराठी</option>
+          <option value="bn">বাংলা</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="chip">
+      <span class="dot"></span>
+      <span data-i18n="heroBadge">Made for small village businesses in India</span>
+    </div>
+
+
+    <h1>
+      <span class="grad" data-i18n="heroTitleMain">Bring your village business online</span><br>
+      <span data-i18n="heroTitleSub">and reach nearby towns digitally.</span>
+    </h1>
+    <p class="subtitle" data-i18n="heroSubtitle">
+      List your products, accept digital payments, learn basic finance and grow your rural business in your own language.
+    </p>
+
+
+    <div class="cta-row">
+      <a href="login.html" class="btn btn-primary">
+        <i class="ri-login-circle-line"></i>
+        <span data-i18n="btnLogin">Login</span>
+      </a>
+      <a href="signup.html" class="btn btn-secondary">
+        <i class="ri-user-add-line"></i>
+        <span data-i18n="btnSignup">Create account</span>
+      </a>
+    </div>
+
+
+    <div class="stats-row">
+      <div class="stat-pill">
+        <i class="ri-store-2-line"></i>
+        <strong>1,500+</strong>
+        <span data-i18n="statShops">shops can be onboarded</span>
+      </div>
+      <div class="stat-pill">
+        <i class="ri-earth-line"></i>
+        <strong>6</strong>
+        <span data-i18n="statLangs">Indian languages</span>
+      </div>
+      <div class="stat-pill">
+        <i class="ri-bank-card-2-line"></i>
+        <strong>0%</strong>
+        <span data-i18n="statFee">listing fee in first year</span>
+      </div>
+    </div>
+
+
+    <div class="hero-card" style="margin-top:26px;">
+      <div class="hero-left">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="pill-mini">
+            <i class="ri-sparkling-2-line"></i>
+            <span data-i18n="aiIntroChip">AI onboarding video</span>
+          </span>
+        </div>
+        <h3 style="font-size:.95rem;margin-top:6px;" data-i18n="aiIntroTitle">
+          Watch how a small achar shop goes digital
+                </h3>
+        <p data-i18n="aiIntroText">
+          Our AI guide “Saathi” explains every step – from registration to first digital payment – in simple village language.
+        </p>
+        <div class="tag-row">
+          <span class="tag" data-i18n="aiTag1">Explained in local language</span>
+          <span class="tag" data-i18n="aiTag2">Step-by-step demo</span>
+          <span class="tag" data-i18n="aiTag3">Ideal for project viva</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="avatar">
+            <i class="ri-robot-2-line"></i>
+          </div>
+          <div>
+            <div class="pill-mini">
+              <i class="ri-sound-module-line"></i>
+              <span data-i18n="aiBadge">Saathi – AI guide</span>
+            </div>
+            <p style="margin-top:4px;" data-i18n="aiMeta">Duration 58 sec • Story of a rural entrepreneur</p>
+          </div>
+        </div>
+        <div class="timeline"><span></span></div>
+        <button id="playScript" class="btn btn-secondary" style="margin-top:4px;align-self:flex-start;">
+          <i class="ri-play-mini-fill"></i>
+          <span data-i18n="aiBtn">Read explainer script</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="right">
+    <!-- Original explanation panel -->
+    <div class="panel">
+      <h3 data-i18n="panelTitle">Why this app is special for rural India</h3>
+      <p data-i18n="panelText">
+        Instead of copying big city e-commerce, this design focuses on village realities: low network, local language, self-help groups, small ticket loans and trust between buyers and sellers.
+      </p>
+      <div class="list">
+        <div class="list-item">
+          <i class="ri-checkbox-circle-line" style="color:#22c55e;"></i>
+          <span data-i18n="panelPoint1">Seller, buyer and admin roles in one system.</span>
+        </div>
+        <div class="list-item">
+          <i class="ri-checkbox-circle-line" style="color:#22c55e;"></i>
+          <span data-i18n="panelPoint2">AI chatbot and voice support planned for low-literacy users.</span>
+        </div>
+        <div class="list-item">
+          <i class="ri-checkbox-circle-line" style="color:#22c55e;"></i>
+          <span data-i18n="panelPoint3">Financial literacy and microloan education built inside.</span>
+        </div>
+      </div>
+      <p class="footer-note" data-i18n="panelUseNote">
+        Tip: In your report, you can mention plans to integrate UPI APIs, speech-to-text, and real database later.
+      </p>
+    </div>
+
+
+    <!-- Dashboard section: Gram Mitra Support (chat) -->
+    <div class="panel">
+      <div class="gm-chat-header">💬 Gram Mitra Support</div>
+      <div class="gm-chat-wrapper">
+        <div id="gm-messages" class="gm-messages"></div>
+        <div class="gm-input-box">
+          <input id="gm-input" placeholder="Type here..." disabled>
+          <button class="gm-send" id="gm-send" onclick="gmSend()" disabled>Send</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Dashboard section: NGO Collaboration -->
+    <div class="panel">
+      <div class="ngo-container">
+        <h4>🤝 NGO Collaboration</h4>
+
+
+        <input type="text" id="ngoName" placeholder="NGO Name">
+        <input type="email" id="ngoEmail" placeholder="Email">
+        <input type="text" id="ngoCountry" placeholder="Country">
+
+
+        <select id="ngoType">
+          <option value="">Select Type of Collaboration</option>
+          <option value="training">Training & Skill Development</option>
+          <option value="funding">Funding & Grants</option>
+          <option value="awareness">Awareness & Campaigns</option>
+          <option value="partnership">Partnership & Networking</option>
+        </select>
+
+
+        <textarea id="ngoMessage" placeholder="Write your message here..." rows="3"></textarea>
+
+
+        <button onclick="submitNgoForm()">Submit Collaboration Request</button>
+
+
+        <div id="ngoSuccessMsg" class="ngo-success">✅ Your request has been submitted successfully!</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  /* ---------- Existing i18n + Saathi script ---------- */
+  const translations = {
+    en: {
+      brandTitle:"GramMitra",
+      brandSubtitle:"Digital haat for village entrepreneurs",
+      heroBadge:"Made for small village businesses in India",
+      heroTitleMain:"Bring your village business online",
+      heroTitleSub:"and reach nearby towns digitally.",
+      heroSubtitle:"List your products, accept digital payments, learn basic finance and grow your rural business in your own language.",
+      btnLogin:"Login",
+      btnSignup:"Create account",
+      statShops:"shops can be onboarded",
+      statLangs:"Indian languages",
+      statFee:"listing fee in first year",
+      aiIntroChip:"AI onboarding video",
+      aiIntroTitle:"Watch how a small achar shop goes digital",
+      aiIntroText:"Our AI guide “Saathi” explains every step – from registration to first digital payment – in simple village language.",
+      aiTag1:"Explained in local language",
+      aiTag2:"Step-by-step demo",
+      aiTag3:"Ideal for project viva",
+      aiBadge:"Saathi – AI guide",
+      aiMeta:"Duration 58 sec • Story of a rural entrepreneur",
+      aiBtn:"Read explainer script",
+      panelTitle:"Why this app is special for rural India",
+      panelText:"Instead of copying big city e-commerce, this design focuses on village realities: low network, local language, self-help groups, small ticket loans and trust between buyers and sellers.",
+      panelPoint1:"Seller, buyer and admin roles in one system.",
+      panelPoint2:"AI chatbot and voice support planned for low-literacy users.",
+      panelPoint3:"Financial literacy and microloan education built inside.",
+      panelUseTitle:"Use this as your project backbone",
+      panelUseText:"You can show all important modules – authentication, multilingual UI, dashboard, catalog, payments, training and admin – using only HTML, CSS and JavaScript.",
+      panelUseNote:"Tip: In your report, you can mention plans to integrate UPI APIs, speech-to-text, and real database later."
+    },
+    hi: {
+      brandTitle:"ग्रामीण उद्यम कनेक्ट",
+      brandSubtitle:"गाँव के उद्यमियों के लिए डिजिटल हाट",
+      heroBadge:"भारत के छोटे गाँव के व्यवसायों के लिए",
+      heroTitleMain:"अपने गाँव का व्यवसाय ऑनलाइन लाएँ",
+      heroTitleSub:"और नज़दीकी कस्बों तक पहुँचें।",
+      heroSubtitle:"अपने प्रोडक्ट लिस्ट करें, डिजिटल पेमेंट लें, बेसिक फाइनेंस सीखें और अपनी भाषा में गाँव का बिज़नेस बढ़ाएँ।",
+      btnLogin:"लॉगिन",
+      btnSignup:"अकाउंट बनाएँ",
+      statShops:"दुकानें ऑनबोर्ड की जा सकती हैं",
+      statLangs:"भारतीय भाषाएँ",
+      statFee:"पहले साल लिस्टिंग शुल्क शून्य",
+      aiIntroChip:"AI ऑनबोर्डिंग वीडियो",
+      aiIntroTitle:"देखिए कैसे छोटी अचार की दुकान ऑनलाइन होती है",
+      aiIntroText:"हमारा AI गाइड “साथी” रजिस्ट्रेशन से लेकर पहली डिजिटल पेमेंट तक हर स्टेप आसान भाषा में समझाता है।",
+      aiTag1:"स्थानीय भाषा में समझाया गया",
+      aiTag2:"स्टेप-बाय-स्टेप डेमो",
+      aiTag3:"प्रोजेक्ट विवा के लिए उपयोगी",
+      aiBadge:"साथी – AI गाइड",
+      aiMeta:"अवधि 58 सेकंड • ग्रामीण उद्यमी की कहानी",
+      aiBtn:"समझाने वाली स्क्रिप्ट देखें",
+      panelTitle:"यह ऐप ग्रामीण भारत के लिए खास क्यों है",
+      panelText:"बड़े शहरों की ई-कॉमर्स कॉपी करने के बजाय यह डिज़ाइन गाँव की सच्चाई पर ध्यान देता है: कम नेटवर्क, स्थानीय भाषा, स्वयं सहायता समूह, छोटे लोन और भरोसेमंद लेन-देन।",
+      panelPoint1:"एक ही सिस्टम में सेलर, बायर और एडमिन रोल।",
+      panelPoint2:"कम पढ़े-लिखे यूज़र्स के लिए AI चैटबॉट और वॉइस सपोर्ट की योजना।",
+      panelPoint3:"फाइनेंशियल लिटरेसी और माइक्रोलोन शिक्षा ऐप के अंदर ही।",
+      panelUseTitle:"अपने प्रोजेक्ट की मज़बूत नींव के रूप में उपयोग करें",
+      panelUseText:"सिर्फ HTML, CSS और JavaScript से आप ऑथ, मल्टीलैंग्वेज UI, डैशबोर्ड, कैटलॉग, पेमेंट, ट्रेनिंग और एडमिन जैसे सभी मॉड्यूल दिखा सकते हैं।",
+      panelUseNote:"टिप: रिपोर्ट में आप आगे चलकर UPI API, स्पीच-टू-टेक्स्ट और असली डेटाबेस जोड़ने की योजना लिख सकते हैं।"
+    },
+    bh: {
+      brandTitle:"ग्राम उद्यम कनेक्ट",
+      brandSubtitle:"गाँव के उद्यमियन खातिर डिजिटल हाट",
+      heroBadge:"भारत के छोट-छोट गाँव के बिजनेस खातिर",
+      heroTitleMain:"अपना गाँव के दुकान ऑनलाइन लाई दीं",
+      heroTitleSub:"आ नज़दीकी शहर तक पहुँचाईं।",
+      heroSubtitle:"समान लिस्ट करीं, डिजिटल पेमेंट लीं, बेसिक फाइनेंस सिखीं आ आपन भाषा में गाँव के बिजनेस बढ़ाईं।",
+      btnLogin:"लॉगिन",
+      btnSignup:"अकाउंट बनाईं",
+      statShops:"दुकान जोड़ल जा सकत बा",
+      statLangs:"भारतीय भाषा",
+      statFee:"पहिला साल लिस्टिंग फ्री",
+      aiIntroChip:"AI ऑनबोर्डिंग वीडियो",
+      aiIntroTitle:"देखीं कइसे नन्हकी अचार दुकान ऑनलाइन होला",
+      aiIntroText:"हमर AI गाइड “साथी” रजिस्ट्रेशन से पहिला डिजिटल पेमेंट लेके सब कुछ आसान बोली में समझावेला।",
+      aiTag1:"लोकल भाषा में समझावल",
+      aiTag2:"स्टेप-बाय-स्टेप डेमो",
+      aiTag3:"प्रोजेक्ट विवा खातिर बढ़िया",
+      aiBadge:"साथी – AI गाइड",
+      aiMeta:"58 सेकंड • एक ग्रामीण उद्यमी के कहानी",
+      aiBtn:"स्क्रिप्ट पढ़ीं",
+      panelTitle:"ई ऐप ग्रामीण भारत खातिर खास काहे बा",
+      panelText:"बड़ शहर वाला ई-कॉमर्स नकल करे के बजाय, ई डिज़ाइन गाँव के सच्चाई देखेला: कम नेटवर्क, लोकल भाषा, स्व-सहायता समूह, छोट-छोट लोन आ भरोसा।",
+      panelPoint1:"एके सिस्टम में सेलर, बायर आ एडमिन।",
+      panelPoint2:"कम पढ़ल-लिखल यूज़र खातिर AI चैटबॉट आ वॉइस सपोर्ट के योजना।",
+      panelPoint3:"फाइनेंस सिखाई आ माइक्रोलोन शिक्षा ऐप के भीतरे।",
+      panelUseTitle:"आपन प्रोजेक्ट के मज़बूत आधार बनाईं",
+      panelUseText:"सिर्फ HTML, CSS, JavaScript से रउआ ऑथ, मल्टीभाषा UI, डैशबोर्ड, कैटलॉग, पेमेंट, ट्रेनिंग आ एडमिन सभ दिखा सकत बानी।",
+      panelUseNote:"नोट: रिपोर्ट में लिख सकत बानी कि आगे चलके UPI API, speech-to-text आ असली डेटाबेस जोड़ब।"
+    },
+    mr: {
+      brandTitle:"ग्रामीण उद्योग कनेक्ट",
+      brandSubtitle:"गावातील उद्योजकांसाठी डिजिटल हाट",
+      heroBadge:"भारतातील छोट्या गावातील व्यवसायांसाठी",
+      heroTitleMain:"आपला गावचा व्यवसाय ऑनलाइन आणा",
+      heroTitleSub:"आणि जवळच्या शहरांपर्यंत पोहोचा.",
+      heroSubtitle:"आपली उत्पादने लिस्ट करा, डिजिटल पेमेंट घ्या, साधी अर्थसाक्षरता शिका आणि आपल्या भाषेत व्यवसाय वाढवा.",
+      btnLogin:"लॉगिन",
+      btnSignup:"खाते तयार करा",
+      statShops:"दुकाने जोडता येतील",
+      statLangs:"भारतीय भाषा",
+      statFee:"पहिले वर्ष लिस्टिंग फी नाही",
+      aiIntroChip:"AI ऑनबोर्डिंग व्हिडिओ",
+      aiIntroTitle:"छोटी लोणच्याची दुकान ऑनलाइन कशी जाते ते पहा",
+      aiIntroText:"आमचा AI गाईड “साथी” रजिस्ट्रेशनपासून पहिल्या डिजिटल पेमेंटपर्यंत प्रत्येक पायरी साध्या भाषेत समजावतो.",
+      aiTag1:"स्थानिक भाषेत समजावलेले",
+      aiTag2:"स्टेप-बाय-स्टेप डेमो",
+      aiTag3:"प्रोजेक्ट विवासाठी उत्तम",
+      aiBadge:"साथी – AI गाईड",
+      aiMeta:"कालावधी 58 सेकंद • ग्रामीण उद्योजकाची गोष्ट",
+      aiBtn:"समजावणीची स्क्रिप्ट वाचा",
+      panelTitle:"हा अ‍ॅप ग्रामीण भारतासाठी खास का आहे",
+      panelText:"मोठ्या शहरांच्या ई-कॉमर्सची नक्कल न करता, हा डिझाइन गावातील वास्तव पाहतो: कमी नेटवर्क, स्थानिक भाषा, स्वयं सहायता गट, लहान कर्जे आणि विश्वास.",
+      panelPoint1:"एकाच सिस्टीममध्ये सेलर, बायर आणि अॅडमिन.",
+      panelPoint2:"कमी साक्षर वापरकर्त्यांसाठी AI चॅटबॉट आणि व्हॉइस सपोर्टची योजना.",
+      panelPoint3:"अर्थसाक्षरता आणि मायक्रोलोन शिक्षण आतच.",
+      panelUseTitle:"आपल्या प्रोजेक्टची मुख्य रचना म्हणून वापरा",
+      panelUseText:"फक्त HTML, CSS आणि JavaScript वापरून तुम्ही ऑथ, मल्टी-लँग्वेज UI, डॅशबोर्ड, कॅटलॉग, पेएंट, ट्रेनिंग आणि अॅडमिन दाखवू शकता.",
+      panelUseNote:"टीप: रिपोर्टमध्ये UPI API, स्पीच-टू-टेक्ट आणि रिअल डेटाबेस पुढे जोडण्याचा उल्लेख करा."
+    },
+    mr: {  // Note: This is duplicated, but in original it's mr, assuming it's correct
+      brandTitle:"ग्रामीण उद्योग कनेक्ट",
+      brandSubtitle:"गावातील उद्योजकांसाठी डिजिटल हाट",
+      heroBadge:"भारतातील छोट्या गावातील व्यवसायांसाठी",
+      heroTitleMain:"आपला गावचा व्यवसाय ऑनलाइन आणा",
+      heroTitleSub:"आणि जवळच्या शहरांपर्यंत पोहोचा.",
+      heroSubtitle:"आपली उत्पादने लिस्ट करा, डिजिटल पेमेंट घ्या, साधी अर्थसाक्षरता शिका आणि आपल्या भाषेत व्यवसाय वाढवा.",
+      btnLogin:"लॉगिन",
+      btnSignup:"खाते तयार करा",
+      statShops:"दुकाने जोडता येतील",
+      statLangs:"भारतीय भाषा",
+      statFee:"पहिले वर्ष लिस्टिंग फी नाही",
+      aiIntroChip:"AI ऑनबोर्डिंग व्हिडिओ",
+      aiIntroTitle:"छोटी लोणच्याची दुकान ऑनलाइन कशी जाते ते पहा",
+      aiIntroText:"आमचा AI गाईड “साथी” रजिस्ट्रेशनपासून पहिल्या डिजिटल पेमेंटपर्यंत प्रत्येक पायरी साध्या भाषेत समजावतो.",
+      aiTag1:"स्थानिक भाषेत समजावलेले",
+      aiTag2:"स्टेप-बाय-स्टेप डेमो",
+      aiTag3:"प्रोजेक्ट विवासाठी उत्तम",
+      aiBadge:"साथी – AI गाईड",
+      aiMeta:"कालावधी 58 सेकंद • ग्रामीण उद्योजकाची गोष्ट",
+      aiBtn:"समजावणीची स्क्रिप्ट वाचा",
+            panelTitle:"हा अ‍ॅप ग्रामीण भारतासाठी खास का आहे",
+      panelText:"मोठ्या शहरांच्या ई-कॉमर्सची नक्कल न करता, हा डिझाइन गावातील वास्तव पाहतो: कमी नेटवर्क, स्थानिक भाषा, स्वयं सहायता गट, लहान कर्जे आणि विश्वास.",
+      panelPoint1:"एकाच सिस्टीममध्ये सेलर, बायर आणि अॅडमिन.",
+      panelPoint2:"कमी साक्षर वापरकर्त्यांसाठी AI चॅटबॉट आणि व्हॉइस सपोर्टची योजना.",
+      panelPoint3:"अर्थसाक्षरता आणि मायक्रोलोन शिक्षण आतच.",
+      panelUseTitle:"आपल्या प्रोजेक्टची मुख्य रचना म्हणून वापरा",
+      panelUseText:"फक्त HTML, CSS आणि JavaScript वापरून तुम्ही ऑथ, मल्टी-लँग्वेज UI, डॅशबोर्ड, कॅटलॉग, पेएंट, ट्रेनिंग आणि अॅडमिन दाखवू शकता.",
+      panelUseNote:"टीप: रिपोर्टमध्ये UPI API, स्पीच-टू-टेक्ट आणि रिअल डेटाबेस पुढे जोडण्याचा उल्लेख करा."
+    },
+    bn: {
+      brandTitle:"গ্রামীণ উদ্যোগ কানেক্ট",
+      brandSubtitle:"গ্রামের উদ্যোক্তাদের জন্য ডিজিটাল হাট",
+      heroBadge:"ভারতের ছোট গ্রামের ব্যবসার জন্য",
+      heroTitleMain:"আপনার গ্রামের ব্যবসা অনলাইনে আনুন",
+      heroTitleSub:"এবং কাছাকাছি শহরে পৌঁছে যান।",
+      heroSubtitle:"আপনার পণ্য তালিকাভুক্ত করুন, ডিজিটাল পেমেন্ট নিন, বেসিক ফাইন্যান্স শিখুন এবং নিজের ভাষায় ব্যবসা বাড়ান।",
+      btnLogin:"লগইন",
+      btnSignup:"অ্যাকাউন্ট খুলুন",
+      statShops:"দোকান অনবোর্ড করা যাবে",
+      statLangs:"ভারতীয় ভাষা",
+      statFee:"প্রথম বছরে লিস্টিং ফি নেই",
+      aiIntroChip:"AI অনবোর্ডিং ভিডিও",
+      aiIntroTitle:"দেখুন কীভাবে ছোট আচারের দোকান অনলাইনে যায়",
+      aiIntroText:"আমাদের AI গাইড “সাথী” রেজিস্ট্রেশন থেকে প্রথম ডিজিটাল পেমেন্ট পর্যন্ত প্রতিটি ধাপ সহজ ভাষায় বুঝিয়ে দেয়।",
+      aiTag1:"স্থানীয় ভাষায় ব্যাখ্যা",
+      aiTag2:"ধাপে ধাপে ডেমো",
+      aiTag3:"প্রজেক্ট ভাইভায় কাজে লাগবে",
+      aiBadge:"সাথী – AI গাইড",
+      aiMeta:"সময় ৫৮ সেকেন্ড • এক গ্রামীণ উদ্যোক্তার গল্প",
+      aiBtn:"স্ক্রিপ্ট পড়ুন",
+      panelTitle:"এই অ্যাপ গ্রামীণ ভারতের জন্য বিশেষ কেন",
+      panelText:"বড় শহরের ই-কমার্স কপি না করে, এই ডিজাইন গ্রামবাসীর বাস্তবতা দেখে: কম নেটওয়ার্ক, স্থানীয় ভাষা, সেল্ফ-হেল্প গ্রুপ, ছোট ঋণ ও বিশ্বাস।",
+      panelPoint1:"এক সিস্টেমে সেলার, বায়ার ও অ্যাডমিন।",
+      panelPoint2:"কম শিক্ষিত ব্যবহারকারীর জন্য AI চ্যাটবট ও ভয়েস সাপোর্টের পরিকল্পনা।",
+      panelPoint3:"ফাইন্যান্স ও মাইক্রোলোন শিক্ষা ভিতরেই রয়েছে।",
+      panelUseTitle:"আপনার প্রজেক্টের শক্ত ভিত্তি হিসেবে ব্যবহার করুন",
+      panelUseText:"শুধু HTML, CSS ও JavaScript দিয়ে অথ, মাল্টি ল্যাঙ্গুয়েজ UI, ড্যাশবোর্ড, ক্যাটালগ, পেমেন্ট, ট্রেনিং ও অ্যাডমিন দেখাতে পারবেন।",
+      panelUseNote:"টিপ: রিপোর্টে লিখুন কীভাবে পরে UPI API, স্পিচ-টু-টেক্সট ও রিয়েল ডেটাবেস যোগ করবেন।"
+    },
+    ta: {
+      brandTitle:"கிராமீன முயற்சி கனெக்ட்",
+      brandSubtitle:"கிராம தொழில் முனைவோர்க்கான டிஜிட்டல் சந்தை",
+      heroBadge:"இந்தியாவின் சிறிய கிராம தொழில்களுக்கு",
+      heroTitleMain:"உங்கள் கிராமக் கடையை ஆன்லைனில் கொண்டு வாருங்கள்",
+      heroTitleSub:"அருகிலுள்ள நகரங்களை எளிதில் அடையுங்கள்.",
+      heroSubtitle:"உங்கள் பொருட்களை பட்டியலிடுங்கள், டிஜிட்டல் கட்டணங்களைப் பெறுங்கள், அடிப்படை நிதி அறிவை கற்றுக்கொள்ளுங்கள் மற்றும் உங்கள் மொழியில் வளர்ச்சி அடையுங்கள்.",
+      btnLogin:"லாகின்",
+      btnSignup:"கணக்கு உருவாக்கவும்",
+      statShops:"கடைகள் இணைக்கப்படலாம்",
+      statLangs:"இந்திய மொழிகள்",
+      statFee:"முதல் வருடம் லிஸ்டிங் கட்டணம் இல்லை",
+      aiIntroChip:"AI ஆன்‌போர்டிங் வீடியோ",
+      aiIntroTitle:"சிறிய ஊர் ஊறுகாய் கடை ஆன்லைனாகும் பயணத்தை பாருங்கள்",
+      aiIntroText:"எங்கள் AI வழிகாட்டி “சாதி” பதிவு முதல் முதல் டிஜிட்டல் கட்டணம் வரை ஒவ்வொரு படியையும் எளிய தமிழில் விளக்குகிறது.",
+      aiTag1:"உள்ளூர் மொழியில் விளக்கம்",
+      aiTag2:"படிப்படியாக டெமோ",
+      aiTag3:"ப்ராஜெக்ட் விவாவுக்கு சிறந்தது",
+      aiBadge:"சாதி – AI வழிகாட்டி",
+      aiMeta:"நேரம் 58 விநாடிகள் • ஒரு கிராம தொழில் முனைவோரின் கதை",
+      aiBtn:"விளக்க உரையைப் படிக்கவும்",
+      panelTitle:"இந்த அப் கிராம இந்தியாவுக்கு ஏன் சிறப்பு",
+      panelText:"பெருநகர e-commerce ஐ நகல் எடுக்காமல், குறைந்த நெட்வொர்க், உள்ளூர் மொழி, சுய உதவி குழுக்கள், சிறிய கடன், நம்பிக்கை போன்ற கிராம வாழ்க்கையின் உண்மை நிலைகளில் கவனம் செலுத்துகிறது.",
+      panelPoint1:"ஒரே சிஸ்டத்தில் விற்பனையாளர், வாங்குபவர், நிர்வாகி.",
+      panelPoint2:"குறைந்த கல்வி பெற்ற பயனர்களுக்கு AI சாட்பாட் மற்றும் வொய்ஸ் ஆதரவு திட்டமிடப்பட்டுள்ளது.",
+      panelPoint3:"நிதி அறிவும் மைக்ரோ லோன் கல்வியும் அப்பிளிக்கேஷனுக்குள்.",
+      panelUseTitle:"உங்கள் ப்ராஜெக்ட்டின் முதன்மை வடிவமைப்பாக பயன்படுத்துங்கள்",
+      panelUseText:"HTML, CSS, JavaScript மட்டும் கொண்டு நீங்கள் Auth, பல மொழி UI, டாஷ்போர்டு, காட்டலாக், பேமெண்ட், பயிற்சி, நிர்வாகம் எல்லாவற்றையும் காட்ட முடியும்.",
+      panelUseNote:"குறிப்பு: ரிப்போர்ட்டில் பின்னர் UPI API, speech-to-text, உண்மையான தரவுத்தள இணைப்பைத் திட்டமிட்டுள்ளீர்கள் என்று குறிப்பிடலாம்."
+    }
+  };
+
+
+  const langSelect = document.getElementById("langSelect");
+  const i18nEls = document.querySelectorAll("[data-i18n]");
+
+
+  function applyLang(lang){
+    const dict = translations[lang] || translations.en;
+    i18nEls.forEach(el=>{
+      const key = el.getAttribute("data-i18n");
+      if(dict[key]) el.innerText = dict[key];
+    });
+  }
+
+
+  const savedLang = localStorage.getItem("app_lang") || "en";
+  langSelect.value = savedLang;
+  applyLang(savedLang);
+
+
+  langSelect.addEventListener("change",e=>{
+    const lang = e.target.value;
+    localStorage.setItem("app_lang",lang);
+    applyLang(lang);
+  });
+
+
+  document.getElementById("playScript").addEventListener("click",()=>{
+    alert(
+`Namaste! This AI explainer video guides a small shopkeeper from a village.
+
+
+1. Choose your language such as Hindi, Bhojpuri, Marathi, Bengali or Tamil.
+2. Register with mobile number and village name – no complex forms.
+3. Add product photos like pickles, vegetables or handicrafts.
+4. Buyers nearby see them and pay by UPI or cash.
+5. You learn basic saving and microloan concepts inside the app.
+
+
+You can narrate this script in your viva and say that in future it will become a real video with voice-over in local languages.`
+    );
+  });
+
+
+  /* ---------- Gram Mitra Support chat logic (embedded) ---------- */
+  const gmMessages = document.getElementById("gm-messages");
+  const gmInput = document.getElementById("gm-input");
+  const gmSendBtn = document.getElementById("gm-send");
+
+
+  let gmLanguage = null;
+
+
+  function gmAdd(sender, text, extra="") {
+    gmMessages.innerHTML += `<div class="gm-message gm-${sender}">${text}${extra}</div>`;
+    gmMessages.scrollTop = gmMessages.scrollHeight;
+  }
+
+
+  function gmLanguageTable() {
+    return `
+      <div class="gm-table">
+        <button onclick="gmSetLang('en')">English</button>
+        <button onclick="gmSetLang('hi')">Hindi</button>
+        <button onclick="gmSetLang('ta')">Tamil</button>
+        <button onclick="gmSetLang('kn')">Kannada</button>
+        <button onclick="gmSetLang('ml')">Malayalam</button>
+      </div>`;
+  }
+
+
+  function gmSetLang(lang) {
+    gmLanguage = lang;
+    gmInput.disabled = false;
+    gmSendBtn.disabled = false;
+    gmAdd("ai", gmReplies.lang[lang], gmOptionButtons());
+  }
+
+
+  const gmButtonLabels = {
+    en: {
+      faster: "📅 Faster Delivery",
+      cancel: "❌ Cancel Order",
+      return: "↩️ Return Order",
+      change: "✏️ Change Details",
+      track: "📦 Track Order",
+      status: "⏳ Status Issue"
+    },
+    hi: {
+      faster: "📅 तेज़ डिलीवरी",
+      cancel: "❌ ऑर्डर कैंसल करें",
+      return: "↩️ ऑर्डर रिटर्न करें",
+      change: "✏️ विवरण बदलें",
+      track: "📦 ऑर्डर ट्रैक करें",
+      status: "⏳ स्टेटस समस्या"
+    },
+    ta: {
+      faster: "📅 விரைவான டெலிவரி",
+      cancel: "❌ ஆர்டர் ரத்து",
+      return: "↩️ ஆர்டர் திரும்ப",
+      change: "✏️ விவரங்கள் மாற்று",
+      track: "📦 ஆர்டர் கண்காணிப்பு",
+      status: "⏳ நிலை பிரச்சனை"
+    },
+    kn: {
+      faster: "📅 ವೇಗದ ವಿತರಣೆ",
+      cancel: "❌ ಆರ್ಡರ್ ರದ್ದು",
+      return: "↩️ ಆರ್ಡರ್ ಹಿಂತಿರುಗಿಸಿ",
+      change: "✏️ ವಿವರಗಳನ್ನು ಬದಲಾಯಿಸಿ",
+      track: "📦 ಆರ್ಡರ್ ಟ್ರ್ಯಾಕ್",
+      status: "⏳ ಸ್ಥಿತಿ ಸಮಸ್ಯೆ"
+    },
+    ml: {
+      faster: "📅 വേഗത്തിലുള്ള ഡെലിവറി",
+      cancel: "❌ ഓർഡർ റദ്ദാക്കുക",
+      return: "↩️ ഓർഡർ തിരികെ നൽകുക",
+      change: "✏️ വിവരങ്ങൾ മാറ്റുക",
+      track: "📦 ഓർഡർ ട്രാക്ക്",
+      status: "⏳ സ്റ്റാറ്റസ് പ്രശ്നം"
+    }
+  };
+
+
+  function gmOptionButtons() {
+    const b = gmButtonLabels[gmLanguage];
+    return `
+    <div class="gm-options">
+      <button onclick="gmQuick('faster')">${b.faster}</button>
+      <button onclick="gmQuick('cancel')">${b.cancel}</button>
+      <button onclick="gmQuick('return')">${b.return}</button>
+      <button onclick="gmQuick('change')">${b.change}</button>
+      <button onclick="gmQuick('track')">${b.track}</button>
+      <button onclick="gmQuick('status')">${b.status}</button>
+    </div>`;
+  }
+
+
+  const gmReplies = {
+    lang: {
+      en: "Hello! How can I help you today?",
+      hi: "नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?",
+      ta: "வணக்கம்! நான் உங்களுக்கு எப்படி உதவலாம்?",
+      kn: "ನಮಸ್ಕಾರ! ನಾನು ನಿಮಗೆ ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು?",
+      ml: "നമസ്കാരം! ഞാൻ നിങ്ങളെ എങ്ങനെ സഹായിക്കാം?"
+    },
+    faster: {
+      en: "Sorry, we do not offer specific date or express delivery currently.",
+      hi: "फिलहाल हम विशेष तारीख पर डिलीवरी नहीं देते।",
+      ta: "தற்போது குறிப்பிட்ட தேதியில் டெலிவரி இல்லை.",
+      kn: "ಪ್ರಸ್ತುತ ನಿರ್ದಿಷ್ಟ ದಿನಾಂಕ ವಿತರಣೆ ಇಲ್ಲ.",
+      ml: "ഇപ്പോൾ പ്രത്യേക തീയതി ഡെലിവറി ലഭ്യമല്ല."
+    },
+    cancel: {
+      en: "If the order is not shipped, it can be cancelled. If shipped, it cannot. Refusing delivery will auto-cancel.",
+      hi: "शिप न होने पर ऑर्डर कैंसल हो सकता है।",
+      ta: "ஷிப் ஆகாத நிலையில் ரத்து செய்யலாம்.",
+      kn: "ಶಿಪ್ ಆಗದಿದ್ದರೆ ರದ್ದು ಮಾಡಬಹುದು.",
+      ml: "ഷിപ്പിംഗ് മുമ്പ് റദ്ദാക്കാം."
+    },
+    return: {
+      en: "Returns can be raised within 7 days after delivery from My Orders.",
+      hi: "डिलीवरी के 7 दिनों के अंदर रिटर्न किया जा सकता है।",
+      ta: "டெலிவரிக்கு 7 நாட்களுக்குள் ரிட்டர்ன் செய்யலாம்.",
+      kn: "7 ದಿನಗಳ ಒಳಗೆ ರಿಟರ್ನ್ ಮಾಡಬಹುದು.",
+            ml: "ഡെലിവറിക്ക് ശേഷം 7 ദിവസത്തിനുള്ളിൽ റിട്ടേൺ."
+    },
+    change: {
+      en: "Address or mobile can be changed only before shipping.",
+      hi: "शिपमेंट से पहले ही बदलाव संभव है।",
+      ta: "ஷிப்பிங் முன்பே மாற்றலாம்.",
+      kn: "ಶಿಪ್ ಮಾಡುವ ಮೊದಲು ಮಾತ್ರ ಬದಲಾಯಿಸಬಹುದು.",
+      ml: "ഷിപ്പിംഗിന് മുമ്പ് മാത്രമേ മാറ്റാനാകൂ."
+    },
+    track: {
+      en: "Your order is shipped and in transit. You can track it from My Orders.",
+      hi: "आपका ऑर्डर ट्रांजिट में है।",
+      ta: "உங்கள் ஆர்டர் டிரான்சிட்டில் உள்ளது.",
+      kn: "ನಿಮ್ಮ ಆರ್ಡರ್ ಟ್ರಾನ್ಸಿಟ್‌ನಲ್ಲಿದೆ.",
+      ml: "നിങ്ങളുടെ ഓർഡർ ട്രാൻസിറ്റിലാണ്."
+    },
+    status: {
+      en: "Order status may take up to 24 hours to update after delivery.",
+      hi: "डिलीवरी के बाद स्टेटस अपडेट होने में 24 घंटे लग सकते हैं।",
+      ta: "ஸ்டேட்டஸ் அப்டேட் ஆக 24 மணி நேரம் ஆகலாம்.",
+      kn: "ಸ್ಥಿತಿಯನ್ನು ನವೀಕರಿಸಲು 24 ಗಂಟೆ ಬೇಕಾಗಬಹುದು.",
+      ml: "സ്റ്റാറ്റസ് അപ്ഡേറ്റ് ചെയ്യാൻ 24 മണിക്കൂർ വരെ എടുക്കാം."
+    }
+  };
+
+
+  function gmQuick(type) {
+    gmAdd("ai", gmReplies[type][gmLanguage], gmOptionButtons());
+  }
+
+
+  function gmSend() {
+    const text = gmInput.value.trim();
+    if (!text) return;
+    gmAdd("user", text);
+    gmInput.value = "";
+    gmAdd("ai", gmReplies.lang[gmLanguage], gmOptionButtons());
+  }
+
+
+  // Initial message for chat
+  gmAdd("ai", "In which language do you want to talk?", gmLanguageTable());
+
+
+  /* ---------- NGO Collaboration logic ---------- */
+  function submitNgoForm() {
+    const name = document.getElementById("ngoName").value.trim();
+    const email = document.getElementById("ngoEmail").value.trim();
+    const country = document.getElementById("ngoCountry").value.trim();
+    const type = document.getElementById("ngoType").value;
+    const message = document.getElementById("ngoMessage").value.trim();
+
+
+    if (!name || !email || !country || !type || !message) {
+      alert("Please fill all the fields.");
+      return;
+    }
+
+
+    let collaborations = JSON.parse(localStorage.getItem("ngo_collaborations")) || [];
+    collaborations.push({name, email, country, type, message, date: new Date().toLocaleString()});
+    localStorage.setItem("ngo_collaborations", JSON.stringify(collaborations));
+
+
+    document.getElementById("ngoName").value = "";
+    document.getElementById("ngoEmail").value = "";
+    document.getElementById("ngoCountry").value = "";
+    document.getElementById("ngoType").value = "";
+    document.getElementById("ngoMessage").value = "";
+
+
+    const successMsg = document.getElementById("ngoSuccessMsg");
+    successMsg.style.display = "block";
+    setTimeout(() => { successMsg.style.display = "none"; }, 4000);
+  }
+</script>
+</body>
+</html>
